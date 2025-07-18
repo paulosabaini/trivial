@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Trivial"
 include(":app")
+include(":core:network")
