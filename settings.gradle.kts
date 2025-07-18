@@ -24,3 +24,4 @@ rootProject.name = "Trivial"
 include(":app")
 include(":core:network")
 include(":core:database")
+include(":core:ui")

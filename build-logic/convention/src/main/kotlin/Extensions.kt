@@ -33,6 +33,13 @@ fun DependencyHandler.implementation(provider: Provider<MinimalExternalModuleDep
     )
 }
 
+fun DependencyHandler.debugImplementation(provider: Provider<MinimalExternalModuleDependency>) {
+    add(
+        "debugImplementation",
+        provider.get().group + ":" + provider.get().name + ":" + provider.get().version
+    )
+}
+
 fun DependencyHandler.ksp(provider: Provider<MinimalExternalModuleDependency>) {
     add("ksp", provider.get().group + ":" + provider.get().name + ":" + provider.get().version)
 }

@@ -83,4 +83,5 @@ room = { id = "androidx.room", version.ref = "room" }
 # build-logic
 trivial-android-application = { id = "trivial.android.application", version = "unspecified" }
 trivial-android-library = { id = "trivial.android.library", version = "unspecified" }
+trivial-android-library-compose = { id = "trivial.android.library.compose", version = "unspecified" }
 trivial-android-feature = { id = "trivial.android.feature", version = "unspecified" }

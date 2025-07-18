@@ -26,6 +26,10 @@ gradlePlugin {
             id = "trivial.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidComposeLibrary") {
+            id = "trivial.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
         register("androidFeature") {
             id = "trivial.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
