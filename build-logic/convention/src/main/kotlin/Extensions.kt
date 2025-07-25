@@ -34,6 +34,10 @@ fun DependencyHandler.implementation(provider: Provider<MinimalExternalModuleDep
     )
 }
 
+fun DependencyHandler.implementation(project: Any) {
+    add("implementation", project)
+}
+
 fun DependencyHandler.debugImplementation(provider: Provider<MinimalExternalModuleDependency>) {
     add(
         "debugImplementation",

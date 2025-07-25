@@ -1,5 +1,7 @@
+import com.android.build.gradle.BaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 class AndroidFeatureConventionPlugin : Plugin<Project> {
@@ -8,7 +10,14 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 alias(libs.plugins.kotlin.compose)
             }
+
+            extensions.configure<BaseExtension> {
+                buildFeatures.compose = true
+            }
+
             dependencies {
+                implementation(project(":core:ui"))
+
                 implementation(libs.androidx.navigation)
                 implementation(libs.androidx.lifecycle.runtime.ktx)
                 implementation(platform(libs.androidx.compose.bom))
@@ -20,6 +29,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(libs.koin.compose.asProvider())
                 implementation(libs.koin.compose.navigation)
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.kotlinx.serialization)
             }
         }
     }
