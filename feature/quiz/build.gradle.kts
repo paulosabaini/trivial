@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.trivial.android.library)
     alias(libs.plugins.trivial.android.feature)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
