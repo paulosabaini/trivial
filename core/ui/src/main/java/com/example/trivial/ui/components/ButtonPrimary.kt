@@ -1,19 +1,27 @@
 package com.example.trivial.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.trivial.ui.theme.Neutral0
+import com.example.trivial.ui.R
+import com.example.trivial.ui.theme.Size
 import com.example.trivial.ui.theme.TrivialTheme
 
 @Composable
@@ -21,19 +29,37 @@ fun ButtonPrimary(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
-    buttonColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier,
         enabled = enabled,
         shape = MaterialTheme.shapes.medium,
-        colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
-        border = BorderStroke(width = 1.dp, color = Neutral0),
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = TrivialTheme.colors.disabledGrey,
+            disabledContentColor = TrivialTheme.colors.onDisabled
+        ),
+        border = BorderStroke(width = Size.SizeHairline, color = TrivialTheme.colors.neutralBlack),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = Size.SizeSmall),
         onClick = onClick
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelMedium)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = text,
+                style = MaterialTheme.typography.labelLarge,
+                textAlign = TextAlign.Center
+            )
+            Icon(
+                painter = painterResource(R.drawable.arrow_right),
+                contentDescription = null,
+                tint = if (enabled) contentColor else TrivialTheme.colors.onDisabled
+            )
+        }
     }
 }
 
@@ -45,16 +71,9 @@ private fun ButtonPrimaryPreview() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ButtonPrimary(text = "Enabled", onClick = {})
+            ButtonPrimary(text = "Enabled", onClick = {}, modifier = Modifier.fillMaxWidth())
             ButtonPrimary(text = "Disabled", enabled = false, onClick = {})
-            ButtonPrimary(
-                text = "Selected",
-                buttonColor = MaterialTheme.colorScheme.secondary,
-                onClick = {},
-            )
-            ButtonPrimary(text = "Correct", onClick = {})
-            ButtonPrimary(text = "Wrong", onClick = {})
-            ButtonPrimary(text = "Button", onClick = {})
+            ButtonPrimary(text = "Button", containerColor = TrivialTheme.colors.pink, onClick = {})
         }
     }
 }

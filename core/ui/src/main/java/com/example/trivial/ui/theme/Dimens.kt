@@ -1,57 +1,77 @@
 package com.example.trivial.ui.theme // Match your project's package structure
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// Font Sizes
-val FontSizeDisplayLarge = 57.sp
-val FontSizeDisplayMedium = 45.sp
-val FontSizeDisplaySmall = 36.sp
+@Immutable
+object FontSize {
+    val DisplayLarge = 48.sp
+    val DisplayMedium = 40.sp
+    val DisplaySmall = 32.sp
 
-val FontSizeHeadlineLarge = 32.sp
-val FontSizeHeadlineMedium = 28.sp
-val FontSizeHeadlineSmall = 24.sp
+    val HeadlineLarge = 30.sp
+    val HeadlineMedium = 26.sp
+    val HeadlineSmall = 22.sp
 
-val FontSizeTitleLarge = 22.sp
-val FontSizeTitleMedium = 16.sp
-val FontSizeTitleSmall = 14.sp
+    val TitleLarge = 20.sp
+    val TitleMedium = 18.sp
+    val TitleSmall = 16.sp
 
-val FontSizeBodyLarge = 16.sp
-val FontSizeBodyMedium = 14.sp
-val FontSizeBodySmall = 12.sp
+    val BodyLarge = 16.sp
+    val BodyMedium = 14.sp
+    val BodySmall = 12.sp
 
-val FontSizeLabelLarge = 14.sp
-val FontSizeLabelMedium = 12.sp
-val FontSizeLabelSmall = 11.sp
+    val LabelLarge = 16.sp
+    val LabelMedium = 12.sp
+    val LabelSmall = 11.sp
+}
 
-// Letter Spacing
-val LetterSpacingDisplayLarge = (-0.25).sp
-val LetterSpacingDefault = 0.sp // For many text styles
-val LetterSpacingBodyLarge = 0.5.sp
-val LetterSpacingLabelSmall = 0.5.sp
+@Immutable
+object LetterSpacing {
+    val LetterSpacingZero = 0.sp
+    val LetterSpacingPointTwo = 0.2.sp
+    val LetterSpacingPointTwoFive = 0.25.sp
+    val LetterSpacingPointFour = 0.4.sp
+    val LetterSpacingPointFive = 0.5.sp
+    val LetterSpacingPointOne = 0.1.sp
+}
 
-// Line Heights
-val LineHeightDisplayLarge = 64.sp
-val LineHeightDisplayMedium = 52.sp // Example, adjust as per your design
-val LineHeightDisplaySmall = 44.sp  // Example
+@Immutable
+object LineHeight {
+    val LineHeightDisplayLarge = 56.sp
+    val LineHeightDisplayMedium = 48.sp
+    val LineHeightDisplaySmall = 40.sp
 
-val LineHeightHeadlineLarge = 40.sp
-val LineHeightHeadlineMedium = 36.sp // Example
-val LineHeightHeadlineSmall = 32.sp  // Example
+    val LineHeightHeadlineLarge = 38.sp
+    val LineHeightHeadlineMedium = 34.sp
+    val LineHeightHeadlineSmall = 30.sp
 
-val LineHeightTitleLarge = 28.sp
-val LineHeightTitleMedium = 24.sp  // Example
-val LineHeightTitleSmall = 20.sp   // Example
+    val LineHeightTitleLarge = 28.sp
+    val LineHeightTitleMedium = 26.sp
+    val LineHeightTitleSmall = 24.sp
 
-val LineHeightBodyLarge = 24.sp
-val LineHeightBodyMedium = 20.sp   // Example
-val LineHeightBodySmall = 16.sp    // Example
+    val LineHeightBodyLarge = 24.sp
+    val LineHeightBodyMedium = 20.sp
+    val LineHeightBodySmall = 16.sp
 
-val LineHeightLabelLarge = 20.sp   // Example
-val LineHeightLabelMedium = 16.sp  // Example
-val LineHeightLabelSmall = 16.sp
+    val LineHeightLabelLarge = 22.sp
+    val LineHeightLabelMedium = 16.sp
+    val LineHeightLabelSmall = 16.sp
+}
 
-// You can also define other tokens here, like padding, margins, icon sizes etc.
-val PaddingSmall = 4.dp
-val PaddingMedium = 8.dp
-val PaddingLarge = 16.dp
+@Immutable
+object Size {
+    val SizeNone = 0.dp
+    val SizeHairline = 1.dp
+    val SizeExtraSmall = 4.dp
+    val SizeSmall = 8.dp
+    val SizeMedium = 16.dp
+    val SizeLarge = 24.dp
+    val SizeExtraLarge = 32.dp
+    val SizeExtraExtraLarge = 64.dp
+    val SizeHuge = 128.dp
+    val SizeExtraHuge = 256.dp
+}
+
+

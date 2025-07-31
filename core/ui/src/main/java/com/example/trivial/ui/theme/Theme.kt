@@ -8,59 +8,39 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Blue30,
-    onPrimary = Neutral100,
-    primaryContainer = Blue30,
-    onPrimaryContainer = Neutral90,
-    secondary = Orange30,
-    onSecondary = Neutral100,
-    secondaryContainer = Orange30,
-    onSecondaryContainer = Neutral90,
-    tertiary = Teal30,
-    onTertiary = Neutral100,
-    tertiaryContainer = Teal30,
-    onTertiaryContainer = Neutral90,
-    error = Red40,
-    onError = Neutral100,
-    errorContainer = Red80,
-    onErrorContainer = DarkRed20,
-    background = Neutral6,
-    onBackground = Neutral90,
-    surface = Neutral10,
-    onSurface = Neutral90,
-    surfaceVariant = Neutral15,
-    onSurfaceVariant = Neutral70,
-    outline = Neutral30
+    primary = TrivialColors.primaryDark,
+    onPrimary = TrivialColors.onPrimaryDark,
+    secondary = TrivialColors.secondaryDark,
+    onSecondary = TrivialColors.onSecondaryDark,
+    tertiary = TrivialColors.tertiaryDark,
+    onTertiary = TrivialColors.onTertiaryDark,
+    background = TrivialColors.backgroundDark,
+    onBackground = TrivialColors.onBackgroundDark,
+    surface = TrivialColors.surfaceDark,
+    onSurface = TrivialColors.onSurfaceDark,
+    onSurfaceVariant = TrivialColors.onSurfaceVariantDark,
+    error = TrivialColors.errorDark,
+    onError = TrivialColors.onErrorDark,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Blue40,
-    onPrimary = Neutral100,
-    primaryContainer = Blue80,
-    onPrimaryContainer = Blue30,
-    secondary = Orange40,
-    onSecondary = Neutral0,
-    secondaryContainer = Orange80,
-    onSecondaryContainer = Orange30,
-    tertiary = Teal40,
-    onTertiary = Neutral0,
-    tertiaryContainer = Teal80,
-    onTertiaryContainer = Teal30,
-    error = Red40,
-    onError = Neutral100,
-    errorContainer = Red80,
-    onErrorContainer = DarkRed20,
-    background = Neutral99,
-    onBackground = Neutral20,
-    surface = Neutral90,
-    onSurface = Neutral20,
-    surfaceVariant = Neutral95,
-    onSurfaceVariant = Neutral20,
-    outline = Neutral70
+    primary = TrivialColors.primary,
+    onPrimary = TrivialColors.onPrimary,
+    secondary = TrivialColors.secondary,
+    onSecondary = TrivialColors.onSecondary,
+    tertiary = TrivialColors.tertiary,
+    onTertiary = TrivialColors.onTertiary,
+    background = TrivialColors.background,
+    onBackground = TrivialColors.onBackground,
+    surface = TrivialColors.surface,
+    onSurface = TrivialColors.onSurface,
+    onSurfaceVariant = TrivialColors.onSurfaceVariant,
+    error = TrivialColors.incorrectRed,
+    onError = TrivialColors.onPrimary,
 )
 
 @Composable
@@ -78,11 +58,20 @@ fun TrivialTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+    val trivialColors = TrivialColors
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(LocalTrivialColors provides trivialColors) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
+}
+
+object TrivialTheme {
+    val colors: TrivialColors
+        @Composable
+        get() = LocalTrivialColors.current
 }
