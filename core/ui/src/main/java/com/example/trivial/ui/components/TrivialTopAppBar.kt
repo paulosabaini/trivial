@@ -8,7 +8,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.trivial.ui.R
+import com.example.trivial.ui.theme.TrivialTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,9 +26,20 @@ fun TrivialTopAppBar(
         navigationIcon = {
             if (showBack) {
                 IconButton(onClick = onBack) {
-                    Icon(painter = painterResource(R.drawable.chevron_backward), contentDescription = "Back")
+                    Icon(
+                        painter = painterResource(R.drawable.chevron_backward),
+                        contentDescription = "Back"
+                    )
                 }
             }
         }
     )
+}
+
+@Preview
+@Composable
+private fun TrivialTopAppBarPreview() {
+    TrivialTheme {
+        TrivialTopAppBar(title = "Trivial", showBack = true, onBack = {})
+    }
 }
