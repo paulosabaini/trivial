@@ -16,7 +16,7 @@ import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
-private const val BASE_URL = "https://opentdb.com/api.php"
+private const val BASE_URL = "https://opentdb.com/"
 private const val TIMEOUT = 15000
 
 @Module

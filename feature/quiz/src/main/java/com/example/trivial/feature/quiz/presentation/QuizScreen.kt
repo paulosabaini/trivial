@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz
+package com.example.trivial.feature.quiz.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
