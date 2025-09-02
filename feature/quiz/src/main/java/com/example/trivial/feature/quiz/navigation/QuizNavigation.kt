@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.trivial.feature.quiz.presentation.QuizRoute
+import com.example.trivial.feature.quiz.ui.QuizRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,8 +1,8 @@
-package com.example.trivial.feature.quiz.data
+package com.example.trivial.feature.quiz.data.network
 
-import com.example.trivial.feature.quiz.data.api.QuizService
+import com.example.trivial.feature.quiz.data.api.QuizRemoteDataSource
 import com.example.trivial.feature.quiz.data.mapper.toQuizQuestion
-import com.example.trivial.feature.quiz.data.model.QuizReplyDto
+import com.example.trivial.feature.quiz.data.network.model.QuizReplyDto
 import com.example.trivial.feature.quiz.domain.model.QuizQuestion
 import io.ktor.client.call.body
 import io.ktor.http.isSuccess

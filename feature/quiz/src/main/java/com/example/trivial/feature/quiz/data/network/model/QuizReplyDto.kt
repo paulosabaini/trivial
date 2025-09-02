@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.data.model
+package com.example.trivial.feature.quiz.data.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -27,5 +27,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    implementation(project(":core:network"))
+    implementation(project(":core:database"))
     implementation(project(":feature:quiz"))
 }

@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.data
+package com.example.trivial.feature.quiz.data.api
 
 import com.example.trivial.feature.quiz.domain.model.QuizQuestion
 

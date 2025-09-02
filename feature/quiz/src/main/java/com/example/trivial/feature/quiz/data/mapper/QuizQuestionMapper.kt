@@ -3,7 +3,7 @@ package com.example.trivial.feature.quiz.data.mapper
 import com.example.trivial.core.common.Category
 import com.example.trivial.core.common.Difficulty
 import com.example.trivial.core.common.QuestionType
-import com.example.trivial.feature.quiz.data.model.QuizQuestionDto
+import com.example.trivial.feature.quiz.data.network.model.QuizQuestionDto
 import com.example.trivial.feature.quiz.domain.model.QuizQuestion
 import kotlin.random.Random
 

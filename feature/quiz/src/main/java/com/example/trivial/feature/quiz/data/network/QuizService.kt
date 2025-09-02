@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.data.api
+package com.example.trivial.feature.quiz.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get

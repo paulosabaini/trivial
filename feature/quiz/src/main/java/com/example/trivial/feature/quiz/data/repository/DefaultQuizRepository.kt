@@ -1,10 +1,12 @@
 package com.example.trivial.feature.quiz.data.repository
 
-import com.example.trivial.feature.quiz.data.QuizRemoteDataSource
+import com.example.trivial.feature.quiz.data.api.QuizRemoteDataSource
 import com.example.trivial.feature.quiz.domain.model.QuizQuestion
 import com.example.trivial.feature.quiz.domain.repository.QuizRepository
+import org.koin.core.annotation.Single
 
-class QuizRepositoryImpl(private val quizRemoteDataSource: QuizRemoteDataSource) : QuizRepository {
+@Single(binds = [QuizRepository::class])
+class DefaultQuizRepository(private val quizRemoteDataSource: QuizRemoteDataSource) : QuizRepository {
     override suspend fun getQuiz(
         amount: String,
         categoryId: String,
