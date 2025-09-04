@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.trivial.database.DatabaseModule
 import com.example.trivial.feature.quiz.data.di.QuizDataModule
 import com.example.trivial.feature.quiz.domain.di.QuizDomainModule
-import com.example.trivial.feature.quiz.ui.QuizPresentationModule
+import com.example.trivial.feature.quiz.ui.di.QuizUiModule
 import com.example.trivial.network.NetworkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,7 +22,7 @@ class TrivialApp : Application() {
             androidContext(this@TrivialApp)
 
             modules(
-                QuizPresentationModule().module,
+                QuizUiModule().module,
                 QuizDomainModule().module,
                 QuizDataModule().module,
                 NetworkModule().module,

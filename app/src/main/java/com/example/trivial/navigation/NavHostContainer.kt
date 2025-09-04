@@ -6,8 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.trivial.feature.quiz.navigation.navigateToQuiz
-import com.example.trivial.feature.quiz.navigation.quizScreen
+import com.example.trivial.feature.quiz.navigation.navigateToQuizFlow
+import com.example.trivial.feature.quiz.navigation.navigateToQuizSetup
+import com.example.trivial.feature.quiz.navigation.quizGraph
 import com.example.trivial.home.navigation.HomeRoute
 import com.example.trivial.home.navigation.homeScreen
 
@@ -23,10 +24,12 @@ fun NavHostContainer(
         modifier = modifier.padding(paddingValues)
     ) {
         homeScreen(
-            onNavigateToQuiz = { navController.navigateToQuiz() },
+            onNavigateToQuiz = { navController.navigateToQuizSetup() },
             onNavigateToHistory = { navController.navigate(route = "history") },
             onNavigateToSettings = { navController.navigate(route = "settings") }
         )
-        quizScreen()
+        quizGraph(
+            onStartQuizClick = { navController.navigateToQuizFlow() }
+        )
     }
 }
