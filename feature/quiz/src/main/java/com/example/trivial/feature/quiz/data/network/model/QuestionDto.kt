@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuizQuestionDto(
+data class QuestionDto(
     val type: String,
     val difficulty: String,
     val category: String,

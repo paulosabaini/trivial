@@ -63,8 +63,8 @@ fun TrivialTheme(
     CompositionLocalProvider(LocalTrivialColors provides trivialColors) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = Typography,
-            shapes = Shapes,
+            typography = TrivialTypography,
+            shapes = TrivialShapes,
             content = content
         )
     }

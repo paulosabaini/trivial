@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.trivial.ui.components.ButtonPrimary
+import com.example.trivial.ui.components.TrivialButton
 
 @Composable
 internal fun HomeRoute(
@@ -45,10 +45,10 @@ internal fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        ButtonPrimary(text = "Start Quiz", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToQuiz)
+        TrivialButton(text = "Start Quiz", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToQuiz)
         Spacer(modifier = Modifier.height(16.dp))
-        ButtonPrimary(text = "History", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToHistory)
+        TrivialButton(text = "History", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToHistory)
         Spacer(modifier = Modifier.height(16.dp))
-        ButtonPrimary(text = "Settings", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToSettings)
+        TrivialButton(text = "Settings", modifier = Modifier.fillMaxWidth(), onClick = onNavigateToSettings)
     }
 }

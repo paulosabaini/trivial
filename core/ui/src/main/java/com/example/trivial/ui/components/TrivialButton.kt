@@ -18,11 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.trivial.ui.R
-import com.example.trivial.ui.theme.Size
+import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 
 @Composable
-fun ButtonPrimary(
+fun TrivialButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
@@ -40,8 +40,8 @@ fun ButtonPrimary(
             disabledContainerColor = TrivialTheme.colors.disabledGrey,
             disabledContentColor = TrivialTheme.colors.onDisabled
         ),
-        border = BorderStroke(width = Size.SizeHairline, color = TrivialTheme.colors.neutralBlack),
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = Size.SizeSmall),
+        border = BorderStroke(width = TrivialSize.SizeHairline, color = TrivialTheme.colors.neutralBlack),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = TrivialSize.SizeSmall),
         onClick = onClick
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -62,15 +62,15 @@ fun ButtonPrimary(
 
 @Preview(showBackground = true)
 @Composable
-private fun ButtonPrimaryPreview() {
+private fun TrivialButtonPreview() {
     TrivialTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ButtonPrimary(text = "Enabled", onClick = {}, modifier = Modifier.fillMaxWidth())
-            ButtonPrimary(text = "Disabled", enabled = false, onClick = {})
-            ButtonPrimary(text = "Button", containerColor = TrivialTheme.colors.pink, onClick = {})
+            TrivialButton(text = "Enabled", onClick = {}, modifier = Modifier.fillMaxWidth())
+            TrivialButton(text = "Disabled", enabled = false, onClick = {})
+            TrivialButton(text = "Button", containerColor = TrivialTheme.colors.pink, onClick = {})
         }
     }
 }

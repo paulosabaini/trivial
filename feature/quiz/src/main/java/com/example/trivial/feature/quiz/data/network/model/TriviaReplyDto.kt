@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuizReplyDto(
+data class TriviaReplyDto(
     @SerialName("response_code")
     val responseCode: Int,
-    val results: List<QuizQuestionDto>
+    val results: List<QuestionDto>
 )

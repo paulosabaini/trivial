@@ -33,14 +33,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.trivial.core.common.Category
-import com.example.trivial.core.common.Difficulty
-import com.example.trivial.core.common.QuestionType
+import com.example.trivial.core.common.TriviaCategory
+import com.example.trivial.core.common.TriviaDifficulty
+import com.example.trivial.core.common.TriviaQuestionType
 import com.example.trivial.ui.R as uiResources
-import com.example.trivial.ui.components.ButtonPrimary
-import com.example.trivial.ui.components.Counter
-import com.example.trivial.ui.components.OptionsSelector
-import com.example.trivial.ui.theme.Size
+import com.example.trivial.ui.components.TrivialButton
+import com.example.trivial.ui.components.TrivialCounter
+import com.example.trivial.ui.components.TrivialOptionsSelector
+import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -62,9 +62,9 @@ internal fun QuizSetupScreen(
     modifier: Modifier = Modifier,
     onStartQuizClick: () -> Unit,
 ) {
-    var difficulty by remember { mutableStateOf(Difficulty.Medium) }
+    var difficulty by remember { mutableStateOf(TriviaDifficulty.Medium) }
     var category by remember { mutableIntStateOf(-1) }
-    var type by remember { mutableStateOf(QuestionType.MultipleChoice) }
+    var type by remember { mutableStateOf(TriviaQuestionType.MultipleChoice) }
     var amount by remember { mutableIntStateOf(10) }
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -72,21 +72,21 @@ internal fun QuizSetupScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(Size.SizeMedium)
+            .padding(TrivialSize.SizeMedium)
     ) {
         Text(
             text = "Quiz Setup",
             style = MaterialTheme.typography.headlineLarge,
             color = TrivialTheme.colors.onPrimary
         )
-        Spacer(modifier = Modifier.height(Size.SizeLarge))
+        Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
         Text(
             text = "Difficulty",
             style = MaterialTheme.typography.titleLarge,
             color = TrivialTheme.colors.onPrimary
         )
-        OptionsSelector(
-            modifier = Modifier.padding(vertical = Size.SizeMedium),
+        TrivialOptionsSelector(
+            modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
             selectedOption = "Medium",
             options = listOf("Easy", "Medium", "Hard")
         ) { }
@@ -97,20 +97,20 @@ internal fun QuizSetupScreen(
         )
         Row(
             modifier = Modifier
-                .padding(vertical = Size.SizeMedium)
+                .padding(vertical = TrivialSize.SizeMedium)
                 .background(TrivialTheme.colors.neutralWhite)
                 .clickable { openBottomSheet = true },
             verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.padding(Size.SizeMedium),
+                modifier = Modifier.padding(TrivialSize.SizeMedium),
                 text = if (category == -1) "Select category" else Categories.list.first { it.id == category }.name,
                 style = MaterialTheme.typography.labelLarge,
                 color = TrivialTheme.colors.neutralBlack
             )
-            Spacer(modifier = Modifier.width(Size.SizeMedium))
+            Spacer(modifier = Modifier.width(TrivialSize.SizeMedium))
             Icon(
-                modifier = Modifier.padding(Size.SizeMedium),
+                modifier = Modifier.padding(TrivialSize.SizeMedium),
                 painter = painterResource(if (category == -1) uiResources.drawable.chevron_right else uiResources.drawable.edit),
                 tint = TrivialTheme.colors.neutralBlack,
                 contentDescription = null,
@@ -121,8 +121,8 @@ internal fun QuizSetupScreen(
             style = MaterialTheme.typography.titleLarge,
             color = TrivialTheme.colors.onPrimary
         )
-        OptionsSelector(
-            modifier = Modifier.padding(vertical = Size.SizeMedium),
+        TrivialOptionsSelector(
+            modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
             selectedOption = "Multiple Choice",
             options = listOf("Multiple Choice", "True / False")
         ) { }
@@ -131,11 +131,11 @@ internal fun QuizSetupScreen(
             style = MaterialTheme.typography.titleLarge,
             color = TrivialTheme.colors.onPrimary
         )
-        Counter(modifier = Modifier.padding(vertical = Size.SizeMedium), count = amount, min = 2) {
+        TrivialCounter(modifier = Modifier.padding(vertical = TrivialSize.SizeMedium), count = amount, min = 2) {
             amount = it
         }
         Spacer(modifier = Modifier.weight(1f))
-        ButtonPrimary(text = "PLAY", containerColor = TrivialTheme.colors.secondary) { }
+        TrivialButton(text = "PLAY", containerColor = TrivialTheme.colors.secondary) { }
     }
 
     if (openBottomSheet) {
@@ -167,9 +167,9 @@ private fun CategoryBottomSheetContent(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(Size.SizeSmall),
-        verticalArrangement = Arrangement.spacedBy(Size.SizeSmall),
-        contentPadding = PaddingValues(Size.SizeMedium)
+        horizontalArrangement = Arrangement.spacedBy(TrivialSize.SizeSmall),
+        verticalArrangement = Arrangement.spacedBy(TrivialSize.SizeSmall),
+        contentPadding = PaddingValues(TrivialSize.SizeMedium)
     ) {
         items(Categories.list) { category ->
             FilterChip(
@@ -187,7 +187,7 @@ private fun CategoryBottomSheetContent(
                 onClick = { onCategorySelected(category.id) })
         }
         item(span = { GridItemSpan(2) }) {
-            ButtonPrimary(
+            TrivialButton(
                 text = "Select",
                 containerColor = TrivialTheme.colors.secondary,
                 onClick = onDismiss
@@ -212,29 +212,29 @@ private fun QuizSetupScreenPreview() {
 
 object Categories {
     val list = listOf(
-        Category(9, "General Knowledge", icon = "\uD83D\uDDFA\uFE0F"),
-        Category(10, "Books", icon = "\uD83D\uDCDA\uFE0F"),
-        Category(11, "Film", icon = "\uD83C\uDFAC"),
-        Category(12, "Music", icon = "\uD83C\uDFB8\uFE0F"),
-        Category(13, "Musicals & Theatres", icon = "\uD83C\uDFAD"),
-        Category(14, "Television", icon = "\uD83D\uDCFA\uFE0F"),
-        Category(15, "Video Games", icon = "\uD83C\uDFAE\uFE0F"),
-        Category(16, "Board Games", icon = "\uD83C\uDFB2"),
-        Category(17, "Science & Nature", icon = "\uD83D\uDD2C"),
-        Category(18, "Computers", icon = "\uD83D\uDCBB\uFE0F"),
-        Category(19, "Mathematics", icon = "\uD83E\uDDEE"),
-        Category(20, "Mythology", icon = "\uD83E\uDEBD"),
-        Category(21, "Sports", icon = "\uD83C\uDFC5"),
-        Category(22, "Geography", icon = "\uD83C\uDF0E"),
-        Category(23, "History", icon = "\uD83D\uDCDC"),
-        Category(24, "Politics", icon = "\uD83D\uDDF3\uFE0F"),
-        Category(25, "Art", icon = "\uD83D\uDDBC\uFE0F"),
-        Category(26, "Celebrities", icon = "\uD83D\uDCF8"),
-        Category(27, "Animals", icon = "\uD83D\uDC31"),
-        Category(28, "Vehicles", icon = "\uD83D\uDE97\uFE0F"),
-        Category(29, "Comics", icon = "\uD83D\uDDEF\uFE0F"),
-        Category(30, "Science Gadgets", icon = "\uD83D\uDD0E"),
-        Category(31, "Japanese Anime & Manga", icon = "\uD83C\uDDEF\uD83C\uDDF5"),
-        Category(32, "Cartoon & Animations", icon = "\uD83D\uDCA8"),
+        TriviaCategory(9, "General Knowledge", icon = "\uD83D\uDDFA\uFE0F"),
+        TriviaCategory(10, "Books", icon = "\uD83D\uDCDA\uFE0F"),
+        TriviaCategory(11, "Film", icon = "\uD83C\uDFAC"),
+        TriviaCategory(12, "Music", icon = "\uD83C\uDFB8\uFE0F"),
+        TriviaCategory(13, "Musicals & Theatres", icon = "\uD83C\uDFAD"),
+        TriviaCategory(14, "Television", icon = "\uD83D\uDCFA\uFE0F"),
+        TriviaCategory(15, "Video Games", icon = "\uD83C\uDFAE\uFE0F"),
+        TriviaCategory(16, "Board Games", icon = "\uD83C\uDFB2"),
+        TriviaCategory(17, "Science & Nature", icon = "\uD83D\uDD2C"),
+        TriviaCategory(18, "Computers", icon = "\uD83D\uDCBB\uFE0F"),
+        TriviaCategory(19, "Mathematics", icon = "\uD83E\uDDEE"),
+        TriviaCategory(20, "Mythology", icon = "\uD83E\uDEBD"),
+        TriviaCategory(21, "Sports", icon = "\uD83C\uDFC5"),
+        TriviaCategory(22, "Geography", icon = "\uD83C\uDF0E"),
+        TriviaCategory(23, "History", icon = "\uD83D\uDCDC"),
+        TriviaCategory(24, "Politics", icon = "\uD83D\uDDF3\uFE0F"),
+        TriviaCategory(25, "Art", icon = "\uD83D\uDDBC\uFE0F"),
+        TriviaCategory(26, "Celebrities", icon = "\uD83D\uDCF8"),
+        TriviaCategory(27, "Animals", icon = "\uD83D\uDC31"),
+        TriviaCategory(28, "Vehicles", icon = "\uD83D\uDE97\uFE0F"),
+        TriviaCategory(29, "Comics", icon = "\uD83D\uDDEF\uFE0F"),
+        TriviaCategory(30, "Science Gadgets", icon = "\uD83D\uDD0E"),
+        TriviaCategory(31, "Japanese Anime & Manga", icon = "\uD83C\uDDEF\uD83C\uDDF5"),
+        TriviaCategory(32, "Cartoon & Animations", icon = "\uD83D\uDCA8"),
     )
 }

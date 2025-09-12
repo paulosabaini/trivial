@@ -1,11 +1,11 @@
 package com.example.trivial.core.common
 
-sealed class QuestionType {
-    object TrueFalse : QuestionType()
-    object MultipleChoice : QuestionType()
+sealed class TriviaQuestionType {
+    object TrueFalse : TriviaQuestionType()
+    object MultipleChoice : TriviaQuestionType()
 
     companion object {
-        fun fromString(type: String): QuestionType {
+        fun fromString(type: String): TriviaQuestionType {
             return when (type) {
                 "boolean" -> TrueFalse
                 "multiple" -> MultipleChoice

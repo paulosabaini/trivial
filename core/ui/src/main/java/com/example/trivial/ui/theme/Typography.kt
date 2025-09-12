@@ -11,110 +11,110 @@ import androidx.compose.ui.text.font.FontWeight
 // Placeholder for your custom body/ui font
 // val BodyFontFamily = FontFamily(Font(R.font.your_body_font_regular)) // Example
 
-val Typography = Typography(
+val TrivialTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold,
-        fontSize = FontSize.DisplayLarge,
-        lineHeight = LineHeight.LineHeightDisplayLarge,
-        letterSpacing = LetterSpacing.LetterSpacingPointFive,
+        fontSize = TrivialFontSize.DisplayLarge,
+        lineHeight = TrivialLineHeight.LineHeightDisplayLarge,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointFive,
     ),
     displayMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold,
-        fontSize = FontSize.DisplayMedium,
-        lineHeight = LineHeight.LineHeightDisplayMedium,
-        letterSpacing = LetterSpacing.LetterSpacingZero
+        fontSize = TrivialFontSize.DisplayMedium,
+        lineHeight = TrivialLineHeight.LineHeightDisplayMedium,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingZero
     ),
     displaySmall = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.SemiBold,
-        fontSize = FontSize.DisplaySmall,
-        lineHeight = LineHeight.LineHeightDisplaySmall,
-        letterSpacing = LetterSpacing.LetterSpacingZero
+        fontSize = TrivialFontSize.DisplaySmall,
+        lineHeight = TrivialLineHeight.LineHeightDisplaySmall,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingZero
     ),
     headlineLarge = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold,
-        fontSize = FontSize.HeadlineLarge,
-        lineHeight = LineHeight.LineHeightHeadlineLarge,
-        letterSpacing = LetterSpacing.LetterSpacingZero
+        fontSize = TrivialFontSize.HeadlineLarge,
+        lineHeight = TrivialLineHeight.LineHeightHeadlineLarge,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingZero
     ),
     headlineMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.SemiBold,
-        fontSize = FontSize.HeadlineMedium,
-        lineHeight = LineHeight.LineHeightHeadlineMedium,
-        letterSpacing = LetterSpacing.LetterSpacingZero
+        fontSize = TrivialFontSize.HeadlineMedium,
+        lineHeight = TrivialLineHeight.LineHeightHeadlineMedium,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingZero
     ),
     headlineSmall = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.SemiBold,
-        fontSize = FontSize.HeadlineSmall,
-        lineHeight = LineHeight.LineHeightHeadlineSmall,
-        letterSpacing = LetterSpacing.LetterSpacingZero
+        fontSize = TrivialFontSize.HeadlineSmall,
+        lineHeight = TrivialLineHeight.LineHeightHeadlineSmall,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingZero
     ),
     titleLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Bold,
-        fontSize = FontSize.TitleLarge,
-        lineHeight = LineHeight.LineHeightTitleLarge,
-        letterSpacing = LetterSpacing.LetterSpacingPointOne
+        fontSize = TrivialFontSize.TitleLarge,
+        lineHeight = TrivialLineHeight.LineHeightTitleLarge,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointOne
     ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.SemiBold,
-        fontSize = FontSize.TitleMedium,
-        lineHeight = LineHeight.LineHeightTitleMedium,
-        letterSpacing = LetterSpacing.LetterSpacingPointOne
+        fontSize = TrivialFontSize.TitleMedium,
+        lineHeight = TrivialLineHeight.LineHeightTitleMedium,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointOne
     ),
     titleSmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Medium,
-        fontSize = FontSize.TitleSmall,
-        lineHeight = LineHeight.LineHeightTitleSmall,
-        letterSpacing = LetterSpacing.LetterSpacingPointOne
+        fontSize = TrivialFontSize.TitleSmall,
+        lineHeight = TrivialLineHeight.LineHeightTitleSmall,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointOne
     ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
-        fontSize = FontSize.BodyLarge,
-        lineHeight = LineHeight.LineHeightBodyLarge,
-        letterSpacing = LetterSpacing.LetterSpacingPointFive
+        fontSize = TrivialFontSize.BodyLarge,
+        lineHeight = TrivialLineHeight.LineHeightBodyLarge,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointFive
     ),
     bodyMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
-        fontSize = FontSize.BodyMedium,
-        lineHeight = LineHeight.LineHeightBodyMedium,
-        letterSpacing = LetterSpacing.LetterSpacingPointTwoFive
+        fontSize = TrivialFontSize.BodyMedium,
+        lineHeight = TrivialLineHeight.LineHeightBodyMedium,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointTwoFive
     ),
     bodySmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
-        fontSize = FontSize.BodySmall,
-        lineHeight = LineHeight.LineHeightBodySmall,
-        letterSpacing = LetterSpacing.LetterSpacingPointFour
+        fontSize = TrivialFontSize.BodySmall,
+        lineHeight = TrivialLineHeight.LineHeightBodySmall,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointFour
     ),
     labelLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Bold,
-        fontSize = FontSize.LabelLarge,
-        lineHeight = LineHeight.LineHeightLabelLarge,
-        letterSpacing = LetterSpacing.LetterSpacingPointTwo
+        fontSize = TrivialFontSize.LabelLarge,
+        lineHeight = TrivialLineHeight.LineHeightLabelLarge,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointTwo
     ),
     labelMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.SemiBold,
-        fontSize = FontSize.LabelMedium,
-        lineHeight = LineHeight.LineHeightLabelMedium,
-        letterSpacing = LetterSpacing.LetterSpacingPointFive
+        fontSize = TrivialFontSize.LabelMedium,
+        lineHeight = TrivialLineHeight.LineHeightLabelMedium,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointFive
     ),
     labelSmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Medium,
-        fontSize = FontSize.LabelSmall,
-        lineHeight = LineHeight.LineHeightLabelSmall,
-        letterSpacing = LetterSpacing.LetterSpacingPointFive
+        fontSize = TrivialFontSize.LabelSmall,
+        lineHeight = TrivialLineHeight.LineHeightLabelSmall,
+        letterSpacing = TrivialLetterSpacing.LetterSpacingPointFive
     )
 )

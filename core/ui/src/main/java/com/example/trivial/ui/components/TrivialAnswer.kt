@@ -14,34 +14,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.trivial.ui.theme.Size
+import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 
-sealed interface QuizAnswerState {
-    object Enabled : QuizAnswerState
-    object Disabled : QuizAnswerState
-    object Selected : QuizAnswerState
-    object Correct : QuizAnswerState
-    object Wrong : QuizAnswerState
+sealed interface TrivialAnswerState {
+    object Enabled : TrivialAnswerState
+    object Disabled : TrivialAnswerState
+    object Selected : TrivialAnswerState
+    object Correct : TrivialAnswerState
+    object Wrong : TrivialAnswerState
 }
 
 @Composable
-fun QuizAnswer(
+fun TrivialAnswer(
     modifier: Modifier = Modifier,
     text: String,
-    state: QuizAnswerState,
+    state: TrivialAnswerState,
     highlight: Boolean = false,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier
-            .height(Size.SizeExtraExtraLarge)
-            .widthIn(min = Size.SizeExtraHuge),
+            .height(TrivialSize.SizeExtraExtraLarge)
+            .widthIn(min = TrivialSize.SizeExtraHuge),
         onClick = onClick,
-        enabled = state != QuizAnswerState.Disabled,
+        enabled = state != TrivialAnswerState.Disabled,
         shape = MaterialTheme.shapes.medium,
-        border = BorderStroke(width = Size.SizeHairline, color = TrivialTheme.colors.neutralBlack),
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = Size.SizeSmall),
+        border = BorderStroke(width = TrivialSize.SizeHairline, color = TrivialTheme.colors.neutralBlack),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = TrivialSize.SizeSmall),
         colors = getButtonColors(state)
     ) {
         Text(text = text.uppercase(), style = MaterialTheme.typography.labelLarge)
@@ -49,30 +49,30 @@ fun QuizAnswer(
 }
 
 @Composable
-private fun getButtonColors(state: QuizAnswerState) = when (state) {
-    QuizAnswerState.Enabled -> ButtonDefaults.buttonColors(
+private fun getButtonColors(state: TrivialAnswerState) = when (state) {
+    TrivialAnswerState.Enabled -> ButtonDefaults.buttonColors(
         containerColor = TrivialTheme.colors.quizButtonContainerColor,
         contentColor = TrivialTheme.colors.neutralBlack,
     )
 
-    QuizAnswerState.Correct -> ButtonDefaults.buttonColors(
+    TrivialAnswerState.Correct -> ButtonDefaults.buttonColors(
         containerColor = TrivialTheme.colors.correctGreen,
         contentColor = TrivialTheme.colors.neutralBlack,
     )
 
-    QuizAnswerState.Disabled -> ButtonDefaults.buttonColors(
+    TrivialAnswerState.Disabled -> ButtonDefaults.buttonColors(
         containerColor = TrivialTheme.colors.quizButtonDisabledColor,
         contentColor = TrivialTheme.colors.quizButtonDisabledTextColor,
         disabledContainerColor = TrivialTheme.colors.quizButtonDisabledColor,
         disabledContentColor = TrivialTheme.colors.quizButtonDisabledTextColor
     )
 
-    QuizAnswerState.Selected -> ButtonDefaults.buttonColors(
+    TrivialAnswerState.Selected -> ButtonDefaults.buttonColors(
         containerColor = TrivialTheme.colors.quizButtonSelectedColor,
         contentColor = TrivialTheme.colors.neutralWhite,
     )
 
-    QuizAnswerState.Wrong -> ButtonDefaults.buttonColors(
+    TrivialAnswerState.Wrong -> ButtonDefaults.buttonColors(
         containerColor = TrivialTheme.colors.incorrectRed,
         contentColor = TrivialTheme.colors.neutralBlack,
     )
@@ -80,21 +80,21 @@ private fun getButtonColors(state: QuizAnswerState) = when (state) {
 
 @Preview(showBackground = true)
 @Composable
-private fun QuizAnswerPreview() {
+private fun TrivialAnswerPreview() {
     TrivialTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            QuizAnswer(text = "Enabled", state = QuizAnswerState.Enabled) { }
-            Spacer(Modifier.height(Size.SizeMedium))
-            QuizAnswer(text = "Disabled", state = QuizAnswerState.Disabled) { }
-            Spacer(Modifier.height(Size.SizeMedium))
-            QuizAnswer(text = "Selected", state = QuizAnswerState.Selected) { }
-            Spacer(Modifier.height(Size.SizeMedium))
-            QuizAnswer(text = "Correct", state = QuizAnswerState.Correct) { }
-            Spacer(Modifier.height(Size.SizeMedium))
-            QuizAnswer(text = "Wrong", state = QuizAnswerState.Wrong) { }
+            TrivialAnswer(text = "Enabled", state = TrivialAnswerState.Enabled) { }
+            Spacer(Modifier.height(TrivialSize.SizeMedium))
+            TrivialAnswer(text = "Disabled", state = TrivialAnswerState.Disabled) { }
+            Spacer(Modifier.height(TrivialSize.SizeMedium))
+            TrivialAnswer(text = "Selected", state = TrivialAnswerState.Selected) { }
+            Spacer(Modifier.height(TrivialSize.SizeMedium))
+            TrivialAnswer(text = "Correct", state = TrivialAnswerState.Correct) { }
+            Spacer(Modifier.height(TrivialSize.SizeMedium))
+            TrivialAnswer(text = "Wrong", state = TrivialAnswerState.Wrong) { }
         }
     }
 }

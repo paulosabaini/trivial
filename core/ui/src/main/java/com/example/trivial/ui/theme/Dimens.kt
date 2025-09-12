@@ -5,7 +5,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Immutable
-object FontSize {
+object TrivialFontSize {
     val DisplayLarge = 48.sp
     val DisplayMedium = 40.sp
     val DisplaySmall = 32.sp
@@ -28,7 +28,7 @@ object FontSize {
 }
 
 @Immutable
-object LetterSpacing {
+object TrivialLetterSpacing {
     val LetterSpacingZero = 0.sp
     val LetterSpacingPointTwo = 0.2.sp
     val LetterSpacingPointTwoFive = 0.25.sp
@@ -38,7 +38,7 @@ object LetterSpacing {
 }
 
 @Immutable
-object LineHeight {
+object TrivialLineHeight {
     val LineHeightDisplayLarge = 56.sp
     val LineHeightDisplayMedium = 48.sp
     val LineHeightDisplaySmall = 40.sp
@@ -61,7 +61,7 @@ object LineHeight {
 }
 
 @Immutable
-object Size {
+object TrivialSize {
     val SizeNone = 0.dp
     val SizeHairline = 1.dp
     val SizeExtraSmall = 4.dp

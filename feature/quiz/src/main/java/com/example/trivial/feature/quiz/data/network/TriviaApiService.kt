@@ -6,9 +6,9 @@ import io.ktor.client.statement.HttpResponse
 import org.koin.core.annotation.Single
 
 @Single
-class QuizService(private val httpClient: HttpClient) {
+class TriviaApiService(private val httpClient: HttpClient) {
 
-    suspend fun getQuiz(
+    suspend fun getQuestions(
         amount: String,
         categoryId: String,
         difficulty: String,

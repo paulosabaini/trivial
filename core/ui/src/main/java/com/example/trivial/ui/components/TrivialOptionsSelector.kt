@@ -17,11 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.trivial.ui.theme.Size
+import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 
 @Composable
-fun OptionsSelector(
+fun TrivialOptionsSelector(
     modifier: Modifier = Modifier,
     selectedOption: String,
     options: List<String>,
@@ -55,7 +55,7 @@ private fun OptionButton(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            modifier = Modifier.padding(Size.SizeMedium),
+            modifier = Modifier.padding(TrivialSize.SizeMedium),
             text = text,
             style = MaterialTheme.typography.labelLarge,
             color = if (isSelected) TrivialTheme.colors.onPrimary else TrivialTheme.colors.neutralBlack,
@@ -65,7 +65,7 @@ private fun OptionButton(
 
 @Preview
 @Composable
-fun OptionButtonPreview() {
+private fun OptionButtonPreview() {
     TrivialTheme {
         Row {
             OptionButton(
@@ -80,10 +80,10 @@ fun OptionButtonPreview() {
 
 @Preview
 @Composable
-fun OptionsSelectorPreview() {
+private fun TrivialOptionsSelectorPreview() {
     TrivialTheme {
         var selectedOption by remember { mutableStateOf("Option 1") }
-        OptionsSelector(
+        TrivialOptionsSelector(
             selectedOption = selectedOption,
             options = listOf(
                 "Option 1",

@@ -1,12 +1,12 @@
 package com.example.trivial.core.common
 
-sealed class Difficulty {
-    object Easy : Difficulty()
-    object Medium : Difficulty()
-    object Hard : Difficulty()
+sealed class TriviaDifficulty {
+    object Easy : TriviaDifficulty()
+    object Medium : TriviaDifficulty()
+    object Hard : TriviaDifficulty()
 
     companion object {
-        fun fromString(difficulty: String): Difficulty {
+        fun fromString(difficulty: String): TriviaDifficulty {
             return when (difficulty) {
                 "easy" -> Easy
                 "medium" -> Medium

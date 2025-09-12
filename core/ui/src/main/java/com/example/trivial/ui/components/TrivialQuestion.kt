@@ -25,12 +25,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.trivial.ui.theme.Size
+import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun Question(
+fun TrivialQuestion(
     modifier: Modifier = Modifier,
     question: String,
     answers: List<String>,
@@ -68,16 +68,16 @@ fun Question(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         border = CardDefaults.outlinedCardBorder(),
-        elevation = CardDefaults.cardElevation(defaultElevation = Size.SizeSmall),
+        elevation = CardDefaults.cardElevation(defaultElevation = TrivialSize.SizeSmall),
         colors = CardDefaults.cardColors(containerColor = TrivialTheme.colors.neutralWhite)
     ) {
-        Column(modifier = Modifier.padding(Size.SizeMedium)) {
-            Spacer(modifier = Modifier.height(Size.SizeMedium))
-            ProgressIndicator(modifier = Modifier.fillMaxWidth(), progress = animatedProgress, color = when {
+        Column(modifier = Modifier.padding(TrivialSize.SizeMedium)) {
+            Spacer(modifier = Modifier.height(TrivialSize.SizeMedium))
+            TrivialProgressIndicator(modifier = Modifier.fillMaxWidth(), progress = animatedProgress, color = when {
                 timeRemaining > totalTimeSeconds * 0.3 -> TrivialTheme.colors.pink
                 else -> TrivialTheme.colors.incorrectRed
             })
-            Spacer(modifier = Modifier.height(Size.SizeLarge))
+            Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = question,
@@ -85,17 +85,17 @@ fun Question(
                 style = MaterialTheme.typography.headlineMedium,
                 color = TrivialTheme.colors.neutralBlack
             )
-            Spacer(modifier = Modifier.height(Size.SizeExtraLarge))
+            Spacer(modifier = Modifier.height(TrivialSize.SizeExtraLarge))
             answers.forEach { answer ->
-                QuizAnswer(
+                TrivialAnswer(
                     modifier = Modifier.fillMaxWidth(),
                     text = answer,
                     state = when {
-                        !isRunning -> QuizAnswerState.Disabled
-                        selectedAnswer == null -> QuizAnswerState.Enabled
-                        answer == correctAnswer -> QuizAnswerState.Correct
-                        answer == selectedAnswer && answer != correctAnswer -> QuizAnswerState.Wrong
-                        else -> QuizAnswerState.Disabled
+                        !isRunning -> TrivialAnswerState.Disabled
+                        selectedAnswer == null -> TrivialAnswerState.Enabled
+                        answer == correctAnswer -> TrivialAnswerState.Correct
+                        answer == selectedAnswer && answer != correctAnswer -> TrivialAnswerState.Wrong
+                        else -> TrivialAnswerState.Disabled
                     },
                     onClick = {
                         if (selectedAnswer == null) {
@@ -109,7 +109,7 @@ fun Question(
                         }
                     }
                 )
-                Spacer(modifier = Modifier.height(Size.SizeMedium))
+                Spacer(modifier = Modifier.height(TrivialSize.SizeMedium))
             }
         }
     }
@@ -117,7 +117,7 @@ fun Question(
 
 @Preview
 @Composable
-fun QuestionPreview() {
+private fun TrivialQuestionPreview() {
     TrivialTheme {
         val question = "What is the capital of France?"
         val answers = listOf("Paris", "London", "Berlin", "Madrid")
@@ -129,8 +129,8 @@ fun QuestionPreview() {
                 .background(TrivialTheme.colors.background),
             verticalArrangement = Arrangement.Center
         ) {
-            Question(
-                modifier = Modifier.padding(Size.SizeMedium),
+            TrivialQuestion(
+                modifier = Modifier.padding(TrivialSize.SizeMedium),
                 question = question,
                 answers = answers,
                 correctAnswer = correctAnswer,
