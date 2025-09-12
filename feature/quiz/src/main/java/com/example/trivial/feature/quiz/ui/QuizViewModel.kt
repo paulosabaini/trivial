@@ -16,19 +16,14 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
     private val _uiState = MutableStateFlow(QuizUiState())
     val uiState: StateFlow<QuizUiState> = _uiState.asStateFlow()
 
-    fun onDifficultyChanged(difficulty: TriviaDifficulty) {
-        _uiState.update { it.copy(selectedDifficulty = difficulty) }
-    }
-
-    fun onTypeChanged(type: TriviaQuestionType) {
-        _uiState.update { it.copy(selectedType = type) }
-    }
-
-    fun onAmountChanged(amount: Int) {
-        _uiState.update { it.copy(numberOfQuestions = amount) }
-    }
-
-    fun onCategoryChanged(category: TriviaCategory) {
-        _uiState.update { it.copy(selectedCategory = category) }
+    fun onQuizSetupAction(action: QuizSetupAction) {
+        _uiState.update { currentState ->
+            when (action) {
+                is QuizSetupAction.OnDifficultyChanged -> currentState.copy(selectedDifficulty = action.difficulty)
+                is QuizSetupAction.OnTypeChanged -> currentState.copy(selectedType = action.type)
+                is QuizSetupAction.OnAmountChanged -> currentState.copy(numberOfQuestions = action.amount)
+                is QuizSetupAction.OnCategoryChanged -> currentState.copy(selectedCategory = action.category)
+            }
+        }
     }
 }

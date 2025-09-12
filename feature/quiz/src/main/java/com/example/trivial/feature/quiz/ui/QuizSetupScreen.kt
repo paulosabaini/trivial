@@ -55,10 +55,7 @@ internal fun QuizRoute(
     QuizSetupScreen(
         modifier = modifier,
         uiState = uiState,
-        onDifficultyChanged = viewModel::onDifficultyChanged,
-        onTypeChanged = viewModel::onTypeChanged,
-        onAmountChanged = viewModel::onAmountChanged,
-        onCategoryChanged = viewModel::onCategoryChanged,
+        onQuizSetupAction = viewModel::onQuizSetupAction,
         onStartQuizClick = onStartQuizClick,
     )
 }
@@ -68,10 +65,7 @@ internal fun QuizRoute(
 internal fun QuizSetupScreen(
     modifier: Modifier = Modifier,
     uiState: QuizUiState,
-    onDifficultyChanged: (TriviaDifficulty) -> Unit,
-    onTypeChanged: (TriviaQuestionType) -> Unit,
-    onAmountChanged: (Int) -> Unit,
-    onCategoryChanged: (TriviaCategory) -> Unit,
+    onQuizSetupAction: (QuizSetupAction) -> Unit,
     onStartQuizClick: () -> Unit,
 ) {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -97,7 +91,7 @@ internal fun QuizSetupScreen(
             modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
             selectedOption = uiState.selectedDifficulty.description,
             options = TriviaDifficulty.entries.map { it.description }
-        ) { onDifficultyChanged(TriviaDifficulty.fromString(it)) }
+        ) { onQuizSetupAction(QuizSetupAction.OnDifficultyChanged(TriviaDifficulty.fromString(it))) }
         Text(
             text = "Category",
             style = MaterialTheme.typography.titleLarge,
@@ -137,7 +131,7 @@ internal fun QuizSetupScreen(
             modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
             selectedOption = uiState.selectedType.description,
             options = TriviaQuestionType.entries.map { it.description }
-        ) { onTypeChanged(TriviaQuestionType.fromString(it)) }
+        ) { onQuizSetupAction(QuizSetupAction.OnTypeChanged(TriviaQuestionType.fromString(it))) }
         Text(
             text = "Number of questions",
             style = MaterialTheme.typography.titleLarge,
@@ -148,7 +142,7 @@ internal fun QuizSetupScreen(
             count = uiState.numberOfQuestions,
             min = 2
         ) {
-            onAmountChanged(it)
+            onQuizSetupAction(QuizSetupAction.OnAmountChanged(it))
         }
         Spacer(modifier = Modifier.weight(1f))
         TrivialButton(text = "PLAY", containerColor = TrivialTheme.colors.secondary) { }
@@ -163,7 +157,7 @@ internal fun QuizSetupScreen(
             CategoryBottomSheetContent(
                 selectedCategory = uiState.selectedCategory,
                 onCategorySelected = {
-                    onCategoryChanged(it)
+                    onQuizSetupAction(QuizSetupAction.OnCategoryChanged(it))
                 },
                 onDismiss = {
                     openBottomSheet = false
@@ -227,11 +221,8 @@ private fun QuizSetupScreenPreview() {
     TrivialTheme {
         QuizSetupScreen(
             uiState = QuizUiState(),
-            onDifficultyChanged = {},
-            onTypeChanged = {},
-            onAmountChanged = {},
+            onQuizSetupAction = {},
             onStartQuizClick = {},
-            onCategoryChanged = {}
         )
     }
 }
