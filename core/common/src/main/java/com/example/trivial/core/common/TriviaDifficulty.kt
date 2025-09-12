@@ -1,16 +1,14 @@
 package com.example.trivial.core.common
 
-sealed class TriviaDifficulty {
-    object Easy : TriviaDifficulty()
-    object Medium : TriviaDifficulty()
-    object Hard : TriviaDifficulty()
+enum class TriviaDifficulty(val description: String) {
+    EASY("Easy"), MEDIUM("Medium"), HARD("Hard");
 
     companion object {
         fun fromString(difficulty: String): TriviaDifficulty {
-            return when (difficulty) {
-                "easy" -> Easy
-                "medium" -> Medium
-                "hard" -> Hard
+            return when (difficulty.lowercase()) {
+                "easy" -> EASY
+                "medium" -> MEDIUM
+                "hard" -> HARD
                 else -> throw IllegalArgumentException("Invalid difficulty: $difficulty")
             }
         }
