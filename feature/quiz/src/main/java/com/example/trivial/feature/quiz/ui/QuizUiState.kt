@@ -15,6 +15,7 @@ data class QuizUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val questions: List<Question> = emptyList(),
+    val isReadyToPlay: Boolean = false,
     val currentQuestion: Int = 0,
     val score: Int = 0,
 )

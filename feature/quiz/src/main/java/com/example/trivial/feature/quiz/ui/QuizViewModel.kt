@@ -1,11 +1,13 @@
 package com.example.trivial.feature.quiz.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.trivial.feature.quiz.domain.usecase.GetQuestionsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -13,6 +15,7 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
     private val _uiState = MutableStateFlow(QuizUiState())
     val uiState: StateFlow<QuizUiState> = _uiState.asStateFlow()
 
+    // TODO: Retrieve categories from API and validate number of questions available.
     fun onQuizSetupAction(action: QuizSetupAction) {
         _uiState.update { currentState ->
             when (action) {
@@ -21,6 +24,43 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
                 is QuizSetupAction.OnAmountChanged -> currentState.copy(numberOfQuestions = action.amount)
                 is QuizSetupAction.OnCategoryChanged -> currentState.copy(selectedCategory = action.category)
             }
+        }
+    }
+
+    fun onPlayClick() {
+        _uiState.update { currentState ->
+            currentState.copy(isLoading = true)
+        }
+
+        // TODO: Improve error handling
+        viewModelScope.launch {
+            getQuestionsUseCase(
+                amount = _uiState.value.numberOfQuestions,
+                categoryId = _uiState.value.selectedCategory.id,
+                difficulty = _uiState.value.selectedDifficulty,
+                type = _uiState.value.selectedType,
+            ).fold(
+                onSuccess = { questions ->
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            error = null,
+                            isReadyToPlay = true,
+                            questions = questions
+                        )
+                    }
+                },
+                onFailure = {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            isLoading = false,
+                            isReadyToPlay = false,
+                            error = it.message
+                        )
+                    }
+                }
+            )
+
         }
     }
 }

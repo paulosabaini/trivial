@@ -31,10 +31,10 @@ fun NavController.navigateToQuizFlow(navOptions: NavOptions? = null) =
 fun NavController.navigateToQuizResult(navOptions: NavOptions? = null) =
     navigate(QuizResultRoute, navOptions)
 
-fun NavGraphBuilder.quizGraph(onStartQuizClick: () -> Unit) {
+fun NavGraphBuilder.quizGraph(startQuiz: () -> Unit) {
     navigation<QuizBaseRoute>(startDestination = QuizSetupRoute) {
         composable<QuizSetupRoute>() {
-            QuizRoute(onStartQuizClick = onStartQuizClick)
+            QuizRoute(startQuiz = startQuiz)
         }
         composable<QuizFlowRoute>() {
             FlowScreen()

@@ -23,6 +23,7 @@ material3 = "1.4.0-alpha18"
 navigation = "2.9.2"
 room = "2.7.2"
 timber = "5.0.1"
+slf4j = "2.0.17-0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -60,6 +61,7 @@ room-ksp = { group = "androidx.room", name = "room-compiler", version.ref="room"
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref="room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref="room" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+slf4j = { group = "uk.uuid.slf4j", name = "slf4j-android", version.ref = "slf4j" }
 
 # build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

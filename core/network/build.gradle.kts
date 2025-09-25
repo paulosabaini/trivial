@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.bundles.ktor)
+    implementation(libs.slf4j)
 }
