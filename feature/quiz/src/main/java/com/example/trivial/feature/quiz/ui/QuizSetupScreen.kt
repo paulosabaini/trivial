@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -28,6 +30,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,7 +48,6 @@ import com.example.trivial.ui.components.TrivialCounter
 import com.example.trivial.ui.components.TrivialOptionsSelector
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun QuizRoute(
@@ -54,9 +56,10 @@ internal fun QuizRoute(
     startQuiz: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentOnStartQuiz by rememberUpdatedState(startQuiz)
 
     if (uiState.isReadyToPlay) {
-        startQuiz()
+        currentOnStartQuiz()
     }
 
     QuizSetupScreen(
@@ -79,12 +82,22 @@ internal fun QuizSetupScreen(
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     // TODO: Divide into different composables
-    // TODO: Display error message
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
+        uiState.error?.let { error ->
+            Card(
+                modifier = Modifier.padding(TrivialSize.SizeMedium),
+                colors = CardDefaults.cardColors(
+                    containerColor = TrivialTheme.colors.tertiary,
+                    contentColor = TrivialTheme.colors.onTertiary
+                )
+            ) {
+                Text(text = error, style = MaterialTheme.typography.headlineMedium)
+            }
+        }
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -116,7 +129,7 @@ internal fun QuizSetupScreen(
                     .padding(vertical = TrivialSize.SizeMedium)
                     .background(TrivialTheme.colors.neutralWhite)
                     .clickable { openBottomSheet = true },
-                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     modifier = Modifier.padding(TrivialSize.SizeMedium),
