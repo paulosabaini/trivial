@@ -50,7 +50,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun QuizRoute(
     modifier: Modifier = Modifier,
-    viewModel: QuizViewModel = koinViewModel(),
+    viewModel: QuizViewModel,
     startQuiz: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

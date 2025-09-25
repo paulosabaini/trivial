@@ -29,6 +29,7 @@ fun NavHostContainer(
             onNavigateToSettings = { navController.navigate(route = "settings") }
         )
         quizGraph(
+            navController = navController,
             startQuiz = { navController.navigateToQuizFlow() }
         )
     }
