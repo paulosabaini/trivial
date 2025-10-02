@@ -91,10 +91,10 @@ fun TrivialQuestion(
                     modifier = Modifier.fillMaxWidth(),
                     text = answer,
                     state = when {
-                        !isRunning -> TrivialAnswerState.Disabled
                         selectedAnswer == null -> TrivialAnswerState.Enabled
                         answer == correctAnswer -> TrivialAnswerState.Correct
                         answer == selectedAnswer && answer != correctAnswer -> TrivialAnswerState.Wrong
+                        !isRunning -> TrivialAnswerState.Disabled
                         else -> TrivialAnswerState.Disabled
                     },
                     onClick = {

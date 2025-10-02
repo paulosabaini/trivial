@@ -87,22 +87,23 @@ internal fun QuizSetupScreen(
             CircularProgressIndicator()
         }
     } else {
-        uiState.error?.let { error ->
-            Card(
-                modifier = Modifier.padding(TrivialSize.SizeMedium),
-                colors = CardDefaults.cardColors(
-                    containerColor = TrivialTheme.colors.tertiary,
-                    contentColor = TrivialTheme.colors.onTertiary
-                )
-            ) {
-                Text(text = error, style = MaterialTheme.typography.headlineMedium)
-            }
-        }
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(TrivialSize.SizeMedium)
         ) {
+            // TODO: Improve error handling
+            uiState.error?.let { error ->
+                Card(
+                    modifier = Modifier.padding(TrivialSize.SizeMedium),
+                    colors = CardDefaults.cardColors(
+                        containerColor = TrivialTheme.colors.tertiary,
+                        contentColor = TrivialTheme.colors.onTertiary
+                    )
+                ) {
+                    Text(text = error, style = MaterialTheme.typography.headlineMedium)
+                }
+            }
             Text(
                 text = "Quiz Setup",
                 style = MaterialTheme.typography.headlineLarge,

@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.trivial.feature.quiz.ui.FlowScreen
+import com.example.trivial.feature.quiz.ui.QuizFlowRoute
 import com.example.trivial.feature.quiz.ui.QuizRoute
 import com.example.trivial.feature.quiz.ui.QuizViewModel
 import com.example.trivial.feature.quiz.ui.ResultScreen
@@ -34,6 +34,7 @@ fun NavController.navigateToQuizFlow(navOptions: NavOptions? = null) =
 fun NavController.navigateToQuizResult(navOptions: NavOptions? = null) =
     navigate(QuizResultRoute, navOptions)
 
+// TODO: Verify if the NavController can be removed or if the navigation could be handled inside this graph.
 fun NavGraphBuilder.quizGraph(navController: NavController, startQuiz: () -> Unit) {
     navigation<QuizBaseRoute>(startDestination = QuizSetupRoute) {
         composable<QuizSetupRoute> { backStackEntry ->
@@ -48,7 +49,7 @@ fun NavGraphBuilder.quizGraph(navController: NavController, startQuiz: () -> Uni
                 navController.getBackStackEntry(QuizBaseRoute)
             }
             val viewModel: QuizViewModel = koinNavViewModel(viewModelStoreOwner = viewModelStoreOwner)
-            FlowScreen(viewModel = viewModel)
+            QuizFlowRoute(viewModel = viewModel)
         }
         composable<QuizResultRoute>() {
             ResultScreen()

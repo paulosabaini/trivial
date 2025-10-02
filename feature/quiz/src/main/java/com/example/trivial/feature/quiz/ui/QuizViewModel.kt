@@ -63,4 +63,16 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
 
         }
     }
+
+    fun onCorrectAnswer() {
+        _uiState.update { currentState ->
+            currentState.copy(score = currentState.score + 1)
+        }
+    }
+
+    fun onNextQuestion() {
+        _uiState.update { currentState ->
+            currentState.copy(currentQuestion = currentState.currentQuestion + 1)
+        }
+    }
 }

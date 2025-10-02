@@ -20,6 +20,7 @@ class TriviaApiService(private val httpClient: HttpClient) {
                 parameters.append("category", categoryId)
                 parameters.append("difficulty", difficulty)
                 parameters.append("type", type)
+                parameters.append("encode", "url3986")
             }
         }
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 
+// TODO: Implement with SingleChoiceSegmentedButtonRow
 @Composable
 fun TrivialOptionsSelector(
     modifier: Modifier = Modifier,
