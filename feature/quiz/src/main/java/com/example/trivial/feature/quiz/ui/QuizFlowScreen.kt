@@ -21,30 +21,40 @@ import com.example.trivial.ui.theme.TrivialTheme
 import kotlinx.coroutines.delay
 
 @Composable
-internal fun QuizFlowRoute(modifier: Modifier = Modifier, viewModel: QuizViewModel) {
+internal fun QuizFlowRoute(
+    modifier: Modifier = Modifier,
+    viewModel: QuizViewModel,
+    onQuizFinished: (score: Int, numberOfQuestions: Int) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    QuizFlowSreen(
+    QuizFlowScreen(
         modifier = modifier,
         uiState = uiState,
         onNextQuestion = viewModel::onNextQuestion,
-        onCorrectAnswer = viewModel::onCorrectAnswer
+        onCorrectAnswer = viewModel::onCorrectAnswer,
+        onQuizFinished = onQuizFinished
     )
 }
 
 @Composable
-internal fun QuizFlowSreen(
+internal fun QuizFlowScreen(
     modifier: Modifier = Modifier,
     uiState: QuizUiState,
     onNextQuestion: () -> Unit,
-    onCorrectAnswer: () -> Unit
+    onCorrectAnswer: () -> Unit,
+    onQuizFinished: (score: Int, numberOfQuestions: Int) -> Unit,
 ) {
     var waitBeforeNextQuestion by remember { mutableStateOf(false) }
+
+    if (uiState.finished) {
+        onQuizFinished(uiState.score, uiState.questions.size)
+    }
 
     // TODO: Replace this logic with animation
     LaunchedEffect(waitBeforeNextQuestion) {
         if (waitBeforeNextQuestion) {
-            delay(3000)
+            delay(2000)
             waitBeforeNextQuestion = false
             onNextQuestion()
         }
@@ -57,44 +67,40 @@ internal fun QuizFlowSreen(
             .background(TrivialTheme.colors.background),
         verticalArrangement = Arrangement.Center
     ) {
-        if (uiState.currentQuestion >= uiState.questions.size) {
-            // TODO: Display final score
-            return
-        } else {
-            val question = uiState.questions[uiState.currentQuestion]
-            key(question) {
-                // TODO: Find a better way to shuffle the answers
-                val answers by remember {
-                    derivedStateOf {
-                        getMixedAnswers(
-                            question.correctAnswer,
-                            question.incorrectAnswers
-                        )
-                    }
+        val question = uiState.questions[uiState.currentQuestion]
+        key(question) {
+            // TODO: Find a better way to shuffle the answers
+            val answers by remember {
+                derivedStateOf {
+                    getMixedAnswers(
+                        question.correctAnswer,
+                        question.incorrectAnswers
+                    )
                 }
-                TrivialQuestion(
-                    modifier = Modifier.padding(TrivialSize.SizeMedium),
-                    question = question.question,
-                    answers = answers,
-                    correctAnswer = question.correctAnswer,
-                    onCorrectAnswer = {
-                        // TODO: Display correct answer animation
-                        onCorrectAnswer()
-                        // onNextQuestion()
-                        waitBeforeNextQuestion = true
-                    },
-                    onWrongAnswer = {
-                        // TODO: Display wrong answer animation
-                        // onNextQuestion()
-                        waitBeforeNextQuestion = true
-                    },
-                    onTimeUp = {
-                        // TODO: Display time up animation
-                        // onNextQuestion()
-                        waitBeforeNextQuestion = true
-                    }
-                )
             }
+            TrivialQuestion(
+                modifier = Modifier.padding(TrivialSize.SizeMedium),
+                question = question.question,
+                answers = answers,
+                correctAnswer = question.correctAnswer,
+                totalTimeSeconds = 15,
+                onCorrectAnswer = {
+                    // TODO: Display correct answer animation
+                    onCorrectAnswer()
+                    // onNextQuestion()
+                    waitBeforeNextQuestion = true
+                },
+                onWrongAnswer = {
+                    // TODO: Display wrong answer animation
+                    // onNextQuestion()
+                    waitBeforeNextQuestion = true
+                },
+                onTimeUp = {
+                    // TODO: Display time up animation
+                    // onNextQuestion()
+                    waitBeforeNextQuestion = true
+                }
+            )
         }
     }
 }

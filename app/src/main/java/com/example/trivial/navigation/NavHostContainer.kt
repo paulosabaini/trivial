@@ -7,10 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.trivial.feature.quiz.navigation.navigateToQuizFlow
+import com.example.trivial.feature.quiz.navigation.navigateToQuizResult
 import com.example.trivial.feature.quiz.navigation.navigateToQuizSetup
 import com.example.trivial.feature.quiz.navigation.quizGraph
 import com.example.trivial.home.navigation.HomeRoute
 import com.example.trivial.home.navigation.homeScreen
+import com.example.trivial.home.navigation.navigateToHome
 
 @Composable
 fun NavHostContainer(
@@ -30,7 +32,14 @@ fun NavHostContainer(
         )
         quizGraph(
             navController = navController,
-            startQuiz = { navController.navigateToQuizFlow() }
+            startQuiz = { navController.navigateToQuizFlow() },
+            onQuizFinished = { score, numberOfQuestions ->
+                navController.navigateToQuizResult(
+                    score,
+                    numberOfQuestions
+                )
+            },
+            goToHome = { navController.navigateToHome() }
         )
     }
 }

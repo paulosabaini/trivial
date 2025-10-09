@@ -18,4 +18,5 @@ data class QuizUiState(
     val isReadyToPlay: Boolean = false,
     val currentQuestion: Int = 0,
     val score: Int = 0,
+    val finished: Boolean = false,
 )

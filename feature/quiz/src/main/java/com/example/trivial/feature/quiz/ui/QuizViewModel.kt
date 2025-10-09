@@ -71,8 +71,15 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
     }
 
     fun onNextQuestion() {
-        _uiState.update { currentState ->
-            currentState.copy(currentQuestion = currentState.currentQuestion + 1)
+        if (_uiState.value.currentQuestion == _uiState.value.questions.size - 1) {
+            // TODO: Save quiz result
+            _uiState.update { currentState ->
+                currentState.copy(finished = true)
+            }
+        } else {
+            _uiState.update { currentState ->
+                currentState.copy(currentQuestion = currentState.currentQuestion + 1)
+            }
         }
     }
 }
