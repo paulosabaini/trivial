@@ -10,16 +10,16 @@ import kotlinx.coroutines.flow.Flow
 interface QuizSessionDao {
 
     @Upsert
-    fun saveQuizSession(quizSession: QuizSessionEntity)
+    suspend fun saveQuizSession(quizSession: QuizSessionEntity)
 
     @Query("SELECT * FROM quiz_session")
-    suspend fun getAllQuizSessions(): Flow<List<QuizSessionEntity>>
+    fun getAllQuizSessions(): Flow<List<QuizSessionEntity>>
 
     @Query("SELECT * FROM quiz_session WHERE id = :id")
-    suspend fun getQuizSessionById(id: Long): Flow<QuizSessionEntity>
+    fun getQuizSessionById(id: Long): Flow<QuizSessionEntity>
 
-    @Query("SELECT * FROM quiz_session WHERE category = :category AND difficulty = :difficulty AND type = :type")
-    suspend fun filterQuizSessions(category: String, difficulty: String, type: String): Flow<List<QuizSessionEntity>>
+    @Query("SELECT * FROM quiz_session WHERE categoryId = :category AND difficulty = :difficulty AND type = :type")
+    fun filterQuizSessions(category: String, difficulty: String, type: String): Flow<List<QuizSessionEntity>>
 
     @Query("DELETE FROM quiz_session WHERE id = :id")
     suspend fun deleteQuizSessionById(id: Long)

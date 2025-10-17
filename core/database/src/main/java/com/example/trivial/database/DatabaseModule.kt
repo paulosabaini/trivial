@@ -12,4 +12,8 @@ class DatabaseModule
 
 @Single
 internal fun createAppDatabase(context: Context) =
-    Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME).build()
+    Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.DB_NAME)
+        .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true).build()
+
+@Single
+internal fun createQuizSessionDao(appDatabase: AppDatabase) = appDatabase.quizSessionDao()

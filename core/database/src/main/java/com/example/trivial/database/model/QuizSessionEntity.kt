@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "quiz_session")
 data class QuizSessionEntity(
-    @PrimaryKey
-    val id: Long,
-    val date: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long? = null,
+    val date: Long,
     val score: Int,
     val numberOfQuestions: Int,
-    val category: String,
+    val categoryId: Int,
     val difficulty: String,
     val type: String,
 )

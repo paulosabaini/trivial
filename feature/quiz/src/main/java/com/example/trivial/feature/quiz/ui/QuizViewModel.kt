@@ -3,6 +3,7 @@ package com.example.trivial.feature.quiz.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trivial.feature.quiz.domain.usecase.GetQuestionsUseCase
+import com.example.trivial.feature.quiz.domain.usecase.SaveQuizResultUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +12,10 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : ViewModel() {
+class QuizViewModel(
+    private val getQuestionsUseCase: GetQuestionsUseCase,
+    private val saveQuizResultUseCase: SaveQuizResultUseCase,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(QuizUiState())
     val uiState: StateFlow<QuizUiState> = _uiState.asStateFlow()
 
@@ -72,7 +76,15 @@ class QuizViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : View
 
     fun onNextQuestion() {
         if (_uiState.value.currentQuestion == _uiState.value.questions.size - 1) {
-            // TODO: Save quiz result
+            viewModelScope.launch {
+                saveQuizResultUseCase(
+                    score = _uiState.value.score,
+                    numberOfQuestions = _uiState.value.questions.size,
+                    category = _uiState.value.selectedCategory,
+                    difficulty = _uiState.value.selectedDifficulty,
+                    type = _uiState.value.selectedType,
+                )
+            }
             _uiState.update { currentState ->
                 currentState.copy(finished = true)
             }
