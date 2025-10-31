@@ -2,6 +2,7 @@ package com.example.trivial.feature.quiz.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.trivial.network.ResponseException
 import com.example.trivial.feature.quiz.domain.usecase.GetQuestionsUseCase
 import com.example.trivial.feature.quiz.domain.usecase.SaveQuizResultUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +37,6 @@ class QuizViewModel(
             currentState.copy(isLoading = true)
         }
 
-        // TODO: Improve error handling
         viewModelScope.launch {
             getQuestionsUseCase(
                 amount = _uiState.value.numberOfQuestions,
@@ -59,7 +59,13 @@ class QuizViewModel(
                         currentState.copy(
                             isLoading = false,
                             isReadyToPlay = false,
-                            error = it.message
+                            error = when (it) {
+                                is ResponseException.NoResults -> "No questions found for the selected criteria"
+                                is ResponseException.InvalidParameter -> "Invalid parameter"
+                                is ResponseException.RateLimit -> "Rate limit exceeded"
+                                is ResponseException.Unknown -> "Ops, something went wrong, please try again"
+                                else -> "Ops, something went wrong, please try again"
+                            }
                         )
                     }
                 }
