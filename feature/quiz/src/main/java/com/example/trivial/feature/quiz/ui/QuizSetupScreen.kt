@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -116,7 +117,7 @@ internal fun QuizSetupScreen(
                 color = TrivialTheme.colors.onPrimary
             )
             TrivialOptionsSelector(
-                modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
+                modifier = Modifier.padding(vertical = TrivialSize.SizeMedium).fillMaxWidth(),
                 selectedOption = uiState.selectedDifficulty.description,
                 options = TriviaDifficulty.entries.map { it.description }
             ) { onQuizSetupAction(QuizSetupAction.OnDifficultyChanged(TriviaDifficulty.fromString(it))) }
@@ -156,7 +157,7 @@ internal fun QuizSetupScreen(
                 color = TrivialTheme.colors.onPrimary
             )
             TrivialOptionsSelector(
-                modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
+                modifier = Modifier.padding(vertical = TrivialSize.SizeMedium).fillMaxWidth(),
                 selectedOption = uiState.selectedType.description,
                 options = TriviaQuestionType.entries.map { it.description }
             ) { onQuizSetupAction(QuizSetupAction.OnTypeChanged(TriviaQuestionType.fromString(it))) }
