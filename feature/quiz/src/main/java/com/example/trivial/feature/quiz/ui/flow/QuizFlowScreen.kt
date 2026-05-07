@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.trivial.feature.quiz.ui.QuizUiState
+import com.example.trivial.feature.quiz.ui.flow.QuizUiState
 import com.example.trivial.ui.components.TrivialQuestion
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme

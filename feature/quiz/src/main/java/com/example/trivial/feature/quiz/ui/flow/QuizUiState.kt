@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.ui
+package com.example.trivial.feature.quiz.ui.flow
 
 import androidx.compose.runtime.Immutable
 import com.example.trivial.core.common.TriviaCategory
@@ -9,7 +9,7 @@ import com.example.trivial.feature.quiz.domain.model.Question
 @Immutable
 data class QuizUiState(
     val selectedDifficulty: TriviaDifficulty = TriviaDifficulty.MEDIUM,
-    val selectedCategory: TriviaCategory = TriviaCategory.DEFAULT,
+    val selectedCategory: TriviaCategory = TriviaCategory.Companion.DEFAULT,
     val selectedType: TriviaQuestionType = TriviaQuestionType.MULTIPLE_CHOICE,
     val questions: List<Question> = emptyList(),
     val currentQuestion: Int = 0,

@@ -8,7 +8,7 @@ import com.example.trivial.core.common.TriviaDifficulty
 import com.example.trivial.core.common.TriviaQuestionType
 import com.example.trivial.feature.quiz.domain.usecase.GetQuizUseCase
 import com.example.trivial.feature.quiz.domain.usecase.SaveQuizResultUseCase
-import com.example.trivial.feature.quiz.ui.QuizUiState
+import com.example.trivial.feature.quiz.ui.flow.QuizUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
