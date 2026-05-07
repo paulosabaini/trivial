@@ -44,7 +44,8 @@ fun NavGraphBuilder.quizGraph(
     navController: NavController,
     startQuiz: () -> Unit,
     onQuizFinished: (score: Int, numberOfQuestions: Int) -> Unit,
-    goToHome: () -> Unit
+    goToHome: () -> Unit,
+    onBack: () -> Unit,
 ) {
     navigation<QuizBaseRoute>(startDestination = QuizSetupRoute) {
         composable<QuizSetupRoute> { backStackEntry ->
@@ -53,7 +54,7 @@ fun NavGraphBuilder.quizGraph(
             }
             val viewModel: QuizViewModel =
                 koinViewModel(viewModelStoreOwner = viewModelStoreOwner)
-            QuizRoute(viewModel = viewModel, startQuiz = startQuiz)
+            QuizRoute(viewModel = viewModel, onBack = onBack, startQuiz = startQuiz)
         }
         composable<QuizFlowRoute> { backStackEntry ->
             val viewModelStoreOwner = remember(backStackEntry) {

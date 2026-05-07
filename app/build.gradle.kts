@@ -30,4 +30,5 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:database"))
     implementation(project(":feature:quiz"))
+    implementation(project(":feature:home"))
 }

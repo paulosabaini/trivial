@@ -1,29 +1,23 @@
 package com.example.trivial.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.trivial.feature.home.navigation.HomeRoute
+import com.example.trivial.feature.home.navigation.homeScreen
+import com.example.trivial.feature.home.navigation.navigateToHome
 import com.example.trivial.feature.quiz.navigation.navigateToQuizFlow
 import com.example.trivial.feature.quiz.navigation.navigateToQuizResult
 import com.example.trivial.feature.quiz.navigation.navigateToQuizSetup
 import com.example.trivial.feature.quiz.navigation.quizGraph
-import com.example.trivial.home.navigation.HomeRoute
-import com.example.trivial.home.navigation.homeScreen
-import com.example.trivial.home.navigation.navigateToHome
 
 @Composable
-fun NavHostContainer(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    paddingValues: PaddingValues
-) {
+fun NavHostContainer() {
+    val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = HomeRoute,
-        modifier = modifier.padding(paddingValues)
     ) {
         homeScreen(
             onNavigateToQuiz = { navController.navigateToQuizSetup() },
@@ -39,7 +33,8 @@ fun NavHostContainer(
                     numberOfQuestions
                 )
             },
-            goToHome = { navController.navigateToHome() }
+            goToHome = { navController.navigateToHome() },
+            onBack = { navController.popBackStack() }
         )
     }
 }

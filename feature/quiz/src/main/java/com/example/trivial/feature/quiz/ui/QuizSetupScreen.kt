@@ -26,6 +26,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -52,13 +53,14 @@ import com.example.trivial.ui.R as uiResources
 import com.example.trivial.ui.components.TrivialButton
 import com.example.trivial.ui.components.TrivialCounter
 import com.example.trivial.ui.components.TrivialOptionsSelector
+import com.example.trivial.ui.components.TrivialTopAppBar
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 
 @Composable
 internal fun QuizRoute(
-    modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
+    onBack: () -> Unit,
     startQuiz: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -69,41 +71,47 @@ internal fun QuizRoute(
     }
 
     QuizSetupScreen(
-        modifier = modifier,
         uiState = uiState,
         onQuizSetupAction = viewModel::onQuizSetupAction,
         onPlayClick = viewModel::onPlayClick,
+        onBack = onBack
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun QuizSetupScreen(
-    modifier: Modifier = Modifier,
     uiState: QuizUiState,
     onQuizSetupAction: (QuizSetupAction) -> Unit,
     onPlayClick: () -> Unit,
+    onBack: () -> Unit,
 ) {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    when {
-        uiState.isLoading -> {
-            LoadingIndicator()
+    Scaffold(
+        topBar = {
+            TrivialTopAppBar(showBack = true, onBack = onBack)
         }
+    ) { paddingValues ->
+        when {
+            uiState.isLoading -> {
+                LoadingIndicator(modifier = Modifier.padding(paddingValues))
+            }
 
-        uiState.error != null -> {
-            ErrorMessage(uiState.error)
-        }
+            uiState.error != null -> {
+                ErrorMessage(modifier = Modifier.padding(paddingValues), message = uiState.error)
+            }
 
-        else -> {
-            ScreenContent(
-                modifier = modifier,
-                uiState = uiState,
-                openBottomSheet = { openBottomSheet = it },
-                onQuizSetupAction = onQuizSetupAction,
-                onPlayClick = onPlayClick
-            )
+            else -> {
+                ScreenContent(
+                    modifier = Modifier.padding(paddingValues),
+                    uiState = uiState,
+                    openBottomSheet = { openBottomSheet = it },
+                    onQuizSetupAction = onQuizSetupAction,
+                    onPlayClick = onPlayClick
+                )
+            }
         }
     }
 
@@ -127,16 +135,16 @@ internal fun QuizSetupScreen(
 }
 
 @Composable
-fun LoadingIndicator() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+fun LoadingIndicator(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(color = TrivialTheme.colors.primary)
     }
 }
 
 @Composable
-fun ErrorMessage(message: String) {
+fun ErrorMessage(modifier: Modifier = Modifier, message: String) {
     Card(
-        modifier = Modifier.padding(TrivialSize.SizeMedium),
+        modifier = modifier.padding(TrivialSize.SizeMedium),
         colors = CardDefaults.cardColors(
             containerColor = TrivialTheme.colors.error,
             contentColor = TrivialTheme.colors.onError
@@ -159,17 +167,19 @@ fun ScreenContent(
     onQuizSetupAction: (QuizSetupAction) -> Unit,
     onPlayClick: () -> Unit
 ) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        .background(TrivialTheme.colors.background)
-        .padding(24.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(TrivialTheme.colors.background)
+            .padding(24.dp)
+    ) {
         Text(
             text = stringResource(R.string.quiz_setup).uppercase(),
             style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Light),
             color = TrivialTheme.colors.onBackground
         )
         Spacer(modifier = Modifier.height(32.dp))
-        
+
         SetupSection(title = stringResource(R.string.difficulty)) {
             TrivialOptionsSelector(
                 modifier = Modifier.fillMaxWidth(),
@@ -226,7 +236,7 @@ fun ScreenContent(
                 onQuizSetupAction(QuizSetupAction.OnAmountChanged(it))
             }
         }
-        
+
         Spacer(modifier = Modifier.weight(1f))
         TrivialButton(
             modifier = Modifier.height(TrivialSize.SizeExtraExtraLarge),
@@ -312,7 +322,9 @@ private fun QuizSetupScreenPreview() {
         QuizSetupScreen(
             uiState = QuizUiState(),
             onQuizSetupAction = {},
+
             onPlayClick = {},
+            onBack = {}
         )
     }
 }

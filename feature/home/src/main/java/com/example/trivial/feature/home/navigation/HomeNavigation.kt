@@ -1,10 +1,10 @@
-package com.example.trivial.home.navigation
+package com.example.trivial.feature.home.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.trivial.home.HomeRoute
+import com.example.trivial.feature.home.HomeRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -16,13 +16,13 @@ import com.example.trivial.ui.theme.TrivialTheme
 @Composable
 fun TrivialTopAppBar(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String? = null,
     showBack: Boolean,
     onBack: () -> Unit
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = title) },
+        title = { title?.let { Text(text = it) } },
         navigationIcon = {
             if (showBack) {
                 IconButton(onClick = onBack) {

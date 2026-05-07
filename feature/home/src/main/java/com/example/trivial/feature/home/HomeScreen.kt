@@ -1,4 +1,4 @@
-package com.example.trivial.home
+package com.example.trivial.feature.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
