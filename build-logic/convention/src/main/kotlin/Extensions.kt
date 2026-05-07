@@ -1,4 +1,6 @@
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -56,45 +58,56 @@ fun Project.setupAndroidModule(isApplication: Boolean) {
         } else {
             alias(libs.plugins.android.library)
         }
-        alias(libs.plugins.kotlin.android)
         alias(libs.plugins.ksp)
     }
 
-    extensions.configure<BaseExtension> {
-        compileSdkVersion(36)
+    if (isApplication) {
+        extensions.configure<ApplicationExtension> {
+            configureAndroidCommon(this)
+        }
+    } else {
+        extensions.configure<LibraryExtension> {
+            configureAndroidCommon(this)
+        }
+    }
+}
 
-        defaultConfig {
+private fun Project.configureAndroidCommon(commonExtension: CommonExtension) {
+    commonExtension.apply {
+        compileSdk = 37
+
+        defaultConfig.apply {
             minSdk = 26
-            targetSdk = 36
-            versionCode = 1
-            versionName = "1.0"
-
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
 
-        compileOptions {
+        if (this is ApplicationExtension) {
+            defaultConfig.apply {
+                targetSdk = 37
+                versionCode = 1
+                versionName = "1.0"
+            }
+        }
+
+        compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
         }
 
-        buildTypes {
-            buildTypes {
-                maybeCreate("debug")
-                maybeCreate("release")
-                named("release") {
-                    isMinifyEnabled = true
-                    proguardFiles(
-                        getDefaultProguardFile("proguard-android-optimize.txt"),
-                        "proguard-rules.pro"
-                    )
-                }
+        buildTypes.apply {
+            maybeCreate("debug")
+            maybeCreate("release")
+            getByName("release").apply {
+                isMinifyEnabled = true
+                proguardFiles(
+                    "proguard-android-optimize.txt",
+                    "proguard-rules.pro"
+                )
             }
         }
 
-        packagingOptions {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            }
+        packaging.resources.apply {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
 
         configureKotlin()
@@ -122,6 +135,7 @@ fun Project.setupBaseDependencies() {
         implementation(libs.koin.asProvider())
         implementation(libs.koin.annotations)
         ksp(libs.koin.ksp.compiler)
+        implementation(libs.koin.core.viewmodel)
 
         // Timber
         implementation(libs.timber)

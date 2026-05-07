@@ -12,7 +12,7 @@ import com.example.trivial.feature.quiz.ui.QuizRoute
 import com.example.trivial.feature.quiz.ui.QuizViewModel
 import com.example.trivial.feature.quiz.ui.QuizResultRoute
 import kotlinx.serialization.Serializable
-import org.koin.androidx.compose.navigation.koinNavViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
 data object QuizBaseRoute
@@ -52,7 +52,7 @@ fun NavGraphBuilder.quizGraph(
                 navController.getBackStackEntry(QuizBaseRoute)
             }
             val viewModel: QuizViewModel =
-                koinNavViewModel(viewModelStoreOwner = viewModelStoreOwner)
+                koinViewModel(viewModelStoreOwner = viewModelStoreOwner)
             QuizRoute(viewModel = viewModel, startQuiz = startQuiz)
         }
         composable<QuizFlowRoute> { backStackEntry ->
@@ -60,7 +60,7 @@ fun NavGraphBuilder.quizGraph(
                 navController.getBackStackEntry(QuizBaseRoute)
             }
             val viewModel: QuizViewModel =
-                koinNavViewModel(viewModelStoreOwner = viewModelStoreOwner)
+                koinViewModel(viewModelStoreOwner = viewModelStoreOwner)
             QuizFlowRoute(viewModel = viewModel, onQuizFinished = onQuizFinished)
         }
         composable<QuizResultRoute> { backStackEntry ->

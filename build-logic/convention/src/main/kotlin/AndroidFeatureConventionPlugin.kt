@@ -1,4 +1,4 @@
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -11,8 +11,10 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 alias(libs.plugins.kotlin.compose)
             }
 
-            extensions.configure<BaseExtension> {
-                buildFeatures.compose = true
+            extensions.configure<CommonExtension> {
+                buildFeatures.apply {
+                    compose = true
+                }
             }
 
             dependencies {
