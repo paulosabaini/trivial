@@ -13,13 +13,13 @@ import com.example.trivial.ui.theme.TrivialTheme
 fun TrivialProgressIndicator(
     modifier: Modifier = Modifier,
     progress: Float,
-    color: Color = TrivialTheme.colors.pink,
+    color: Color = TrivialTheme.colors.primary,
 ) {
     LinearProgressIndicator(
         progress = { progress },
         modifier = modifier.height(TrivialSize.SizeSmall),
         color = color,
-        trackColor = TrivialTheme.colors.lightGrey,
+        trackColor = TrivialTheme.colors.gray300,
         gapSize = TrivialSize.SizeNone,
         drawStopIndicator = {}
     )

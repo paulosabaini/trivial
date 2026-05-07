@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -64,53 +62,44 @@ fun TrivialQuestion(
         }
     }
 
-    Card(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        border = CardDefaults.outlinedCardBorder(),
-        elevation = CardDefaults.cardElevation(defaultElevation = TrivialSize.SizeSmall),
-        colors = CardDefaults.cardColors(containerColor = TrivialTheme.colors.neutralWhite)
-    ) {
-        Column(modifier = Modifier.padding(TrivialSize.SizeMedium)) {
-            Spacer(modifier = Modifier.height(TrivialSize.SizeMedium))
-            TrivialProgressIndicator(modifier = Modifier.fillMaxWidth(), progress = animatedProgress, color = when {
-                timeRemaining > totalTimeSeconds * 0.3 -> TrivialTheme.colors.pink
-                else -> TrivialTheme.colors.incorrectRed
-            })
-            Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
-            Text(
+    Column(modifier = modifier.padding(TrivialSize.SizeMedium)) {
+        TrivialProgressIndicator(
+            modifier = Modifier.fillMaxWidth(),
+            progress = animatedProgress,
+            color = if (timeRemaining > totalTimeSeconds * 0.3) TrivialTheme.colors.primary else TrivialTheme.colors.error
+        )
+        Spacer(modifier = Modifier.height(TrivialSize.SizeExtraLarge))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = question,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineMedium,
+            color = TrivialTheme.colors.onBackground
+        )
+        Spacer(modifier = Modifier.height(TrivialSize.SizeExtraLarge))
+        answers.forEach { answer ->
+            TrivialAnswer(
                 modifier = Modifier.fillMaxWidth(),
-                text = question,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineMedium,
-                color = TrivialTheme.colors.neutralBlack
-            )
-            Spacer(modifier = Modifier.height(TrivialSize.SizeExtraLarge))
-            answers.forEach { answer ->
-                TrivialAnswer(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = answer,
-                    state = when {
-                        selectedAnswer == null -> TrivialAnswerState.Enabled
-                        answer == correctAnswer -> TrivialAnswerState.Correct
-                        answer == selectedAnswer && answer != correctAnswer -> TrivialAnswerState.Wrong
-                        !isRunning -> TrivialAnswerState.Disabled
-                        else -> TrivialAnswerState.Disabled
-                    },
-                    onClick = {
-                        if (selectedAnswer == null) {
-                            selectedAnswer = answer
-                            if (answer == correctAnswer) {
-                                onCorrectAnswer()
-                            } else {
-                                onWrongAnswer()
-                            }
-                            isRunning = false
+                text = answer,
+                state = when {
+                    selectedAnswer == null -> TrivialAnswerState.Enabled
+                    answer == correctAnswer -> TrivialAnswerState.Correct
+                    answer == selectedAnswer && answer != correctAnswer -> TrivialAnswerState.Wrong
+                    else -> TrivialAnswerState.Disabled
+                },
+                onClick = {
+                    if (selectedAnswer == null) {
+                        selectedAnswer = answer
+                        if (answer == correctAnswer) {
+                            onCorrectAnswer()
+                        } else {
+                            onWrongAnswer()
                         }
+                        isRunning = false
                     }
-                )
-                Spacer(modifier = Modifier.height(TrivialSize.SizeMedium))
-            }
+                }
+            )
+            Spacer(modifier = Modifier.height(TrivialSize.SizeMedium))
         }
     }
 }

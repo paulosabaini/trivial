@@ -1,5 +1,6 @@
 package com.example.trivial.feature.quiz.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,6 +26,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -38,7 +39,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.trivial.core.common.TriviaCategories
 import com.example.trivial.core.common.TriviaCategory
@@ -107,7 +110,7 @@ internal fun QuizSetupScreen(
     if (openBottomSheet) {
         ModalBottomSheet(
             sheetState = bottomSheetState,
-            containerColor = TrivialTheme.colors.neutralWhite,
+            containerColor = TrivialTheme.colors.background,
             onDismissRequest = { openBottomSheet = false },
         ) {
             CategoryBottomSheetContent(
@@ -126,7 +129,7 @@ internal fun QuizSetupScreen(
 @Composable
 fun LoadingIndicator() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(color = TrivialTheme.colors.primary)
     }
 }
 
@@ -135,11 +138,16 @@ fun ErrorMessage(message: String) {
     Card(
         modifier = Modifier.padding(TrivialSize.SizeMedium),
         colors = CardDefaults.cardColors(
-            containerColor = TrivialTheme.colors.errorDark,
-            contentColor = TrivialTheme.colors.onErrorDark
-        )
+            containerColor = TrivialTheme.colors.error,
+            contentColor = TrivialTheme.colors.onError
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = TrivialSize.SizeNone)
     ) {
-        Text(text = message, style = MaterialTheme.typography.headlineMedium)
+        Text(
+            modifier = Modifier.padding(TrivialSize.SizeMedium),
+            text = message,
+            style = MaterialTheme.typography.headlineSmall
+        )
     }
 }
 
@@ -153,86 +161,95 @@ fun ScreenContent(
 ) {
     Column(modifier = modifier
         .fillMaxSize()
-        .padding(TrivialSize.SizeMedium)) {
+        .background(TrivialTheme.colors.background)
+        .padding(24.dp)) {
         Text(
-            text = stringResource(R.string.quiz_setup),
-            style = MaterialTheme.typography.headlineLarge,
-            color = TrivialTheme.colors.onPrimary
+            text = stringResource(R.string.quiz_setup).uppercase(),
+            style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Light),
+            color = TrivialTheme.colors.onBackground
         )
-        Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
-        Text(
-            text = stringResource(R.string.difficulty),
-            style = MaterialTheme.typography.titleLarge,
-            color = TrivialTheme.colors.onPrimary
-        )
-        TrivialOptionsSelector(
-            modifier = Modifier
-                .padding(vertical = TrivialSize.SizeMedium)
-                .fillMaxWidth(),
-            selectedOption = uiState.selectedDifficulty.description,
-            options = TriviaDifficulty.entries.map { it.description }
-        ) { onQuizSetupAction(QuizSetupAction.OnDifficultyChanged(TriviaDifficulty.fromString(it))) }
-        Text(
-            text = stringResource(R.string.category),
-            style = MaterialTheme.typography.titleLarge,
-            color = TrivialTheme.colors.onPrimary
-        )
-        Row(
-            modifier = Modifier
-                .padding(vertical = TrivialSize.SizeMedium)
-                .background(TrivialTheme.colors.neutralWhite)
-                .clickable { openBottomSheet(true) },
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier.padding(TrivialSize.SizeMedium),
-                text = if (uiState.selectedCategory == TriviaCategory.DEFAULT) {
-                    stringResource(R.string.select_category)
-                } else {
-                    uiState.selectedCategory.name
-                },
-                style = MaterialTheme.typography.labelLarge,
-                color = TrivialTheme.colors.neutralBlack
-            )
-            Spacer(modifier = Modifier.width(TrivialSize.SizeMedium))
-            Icon(
-                modifier = Modifier.padding(TrivialSize.SizeMedium),
-                painter = painterResource(if (uiState.selectedCategory == TriviaCategory.DEFAULT) uiResources.drawable.chevron_right else uiResources.drawable.edit),
-                tint = TrivialTheme.colors.neutralBlack,
-                contentDescription = null,
-            )
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        SetupSection(title = stringResource(R.string.difficulty)) {
+            TrivialOptionsSelector(
+                modifier = Modifier.fillMaxWidth(),
+                selectedOption = uiState.selectedDifficulty.description,
+                options = TriviaDifficulty.entries.map { it.description }
+            ) { onQuizSetupAction(QuizSetupAction.OnDifficultyChanged(TriviaDifficulty.fromString(it))) }
         }
-        Text(
-            text = "Type",
-            style = MaterialTheme.typography.titleLarge,
-            color = TrivialTheme.colors.onPrimary
-        )
-        TrivialOptionsSelector(
-            modifier = Modifier
-                .padding(vertical = TrivialSize.SizeMedium)
-                .fillMaxWidth(),
-            selectedOption = uiState.selectedType.description,
-            options = TriviaQuestionType.entries.map { it.description }
-        ) { onQuizSetupAction(QuizSetupAction.OnTypeChanged(TriviaQuestionType.fromString(it))) }
-        Text(
-            text = stringResource(R.string.number_of_questions),
-            style = MaterialTheme.typography.titleLarge,
-            color = TrivialTheme.colors.onPrimary
-        )
-        TrivialCounter(
-            modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
-            count = uiState.numberOfQuestions,
-            min = 2
-        ) {
-            onQuizSetupAction(QuizSetupAction.OnAmountChanged(it))
+
+        SetupSection(title = stringResource(R.string.category)) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { openBottomSheet(true) },
+                shape = MaterialTheme.shapes.small,
+                border = BorderStroke(1.dp, TrivialTheme.colors.gray300),
+                color = TrivialTheme.colors.background
+            ) {
+                Row(
+                    modifier = Modifier.padding(TrivialSize.SizeMedium),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = if (uiState.selectedCategory == TriviaCategory.DEFAULT) {
+                            stringResource(R.string.select_category)
+                        } else {
+                            uiState.selectedCategory.name
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = TrivialTheme.colors.onBackground
+                    )
+                    Icon(
+                        painter = painterResource(if (uiState.selectedCategory == TriviaCategory.DEFAULT) uiResources.drawable.chevron_right else uiResources.drawable.edit),
+                        tint = TrivialTheme.colors.onBackground,
+                        contentDescription = null,
+                    )
+                }
+            }
         }
+
+        SetupSection(title = "Type") {
+            TrivialOptionsSelector(
+                modifier = Modifier.fillMaxWidth(),
+                selectedOption = uiState.selectedType.description,
+                options = TriviaQuestionType.entries.map { it.description }
+            ) { onQuizSetupAction(QuizSetupAction.OnTypeChanged(TriviaQuestionType.fromString(it))) }
+        }
+
+        SetupSection(title = stringResource(R.string.number_of_questions)) {
+            TrivialCounter(
+                count = uiState.numberOfQuestions,
+                min = 2
+            ) {
+                onQuizSetupAction(QuizSetupAction.OnAmountChanged(it))
+            }
+        }
+        
         Spacer(modifier = Modifier.weight(1f))
         TrivialButton(
+            modifier = Modifier.height(TrivialSize.SizeExtraExtraLarge),
             text = stringResource(R.string.play),
             enabled = uiState.selectedCategory != TriviaCategory.DEFAULT,
-            containerColor = TrivialTheme.colors.secondary,
             onClick = onPlayClick
         )
+    }
+}
+
+@Composable
+private fun SetupSection(
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column(modifier = Modifier.padding(bottom = 24.dp)) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal),
+            color = TrivialTheme.colors.gray600,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        content()
     }
 }
 
@@ -258,17 +275,19 @@ private fun CategoryBottomSheetContent(
                     { Text(icon) }
                 },
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = TrivialTheme.colors.neutralWhite,
-                    labelColor = TrivialTheme.colors.neutralBlack,
-                    selectedContainerColor = TrivialTheme.colors.tertiary,
-                    selectedLabelColor = TrivialTheme.colors.onTertiary
+                    containerColor = TrivialTheme.colors.surface,
+                    labelColor = TrivialTheme.colors.onSurface,
+                    selectedContainerColor = TrivialTheme.colors.primary,
+                    selectedLabelColor = TrivialTheme.colors.onPrimary
                 ),
+                border = null,
                 onClick = { onCategorySelected(category) })
         }
         item(span = { GridItemSpan(2) }) {
             TrivialButton(
                 text = stringResource(R.string.select),
                 containerColor = TrivialTheme.colors.secondary,
+                contentColor = TrivialTheme.colors.onSecondary,
                 onClick = onDismiss
             )
         }
@@ -278,10 +297,12 @@ private fun CategoryBottomSheetContent(
 @Preview
 @Composable
 private fun CategoryBottomSheetContentPreview() {
-    CategoryBottomSheetContent(
-        selectedCategory = TriviaCategory.DEFAULT,
-        onCategorySelected = {},
-        onDismiss = {})
+    TrivialTheme {
+        CategoryBottomSheetContent(
+            selectedCategory = TriviaCategory.DEFAULT,
+            onCategorySelected = {},
+            onDismiss = {})
+    }
 }
 
 @Preview()
@@ -295,4 +316,3 @@ private fun QuizSetupScreenPreview() {
         )
     }
 }
-

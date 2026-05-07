@@ -1,6 +1,5 @@
 package com.example.trivial.feature.quiz.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,16 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.trivial.feature.quiz.R
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.trivial.ui.components.TrivialButton
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
@@ -48,44 +47,60 @@ internal fun QuizResultScreen(
         modifier = modifier
             .fillMaxSize()
             .background(TrivialTheme.colors.background)
-            .padding(TrivialSize.SizeMedium),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            modifier = Modifier.size(TrivialSize.SizeExtraHuge),
-            painter = painterResource(id = R.drawable.ic_trophy),
-            contentDescription = null,
-        )
-        Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
+        Spacer(modifier = Modifier.height(64.dp))
+        
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "CONGRATULATIONS",
-            style = MaterialTheme.typography.headlineMedium.copy(color = TrivialTheme.colors.onBackground),
+            text = "★",
+            style = MaterialTheme.typography.displayLarge.copy(fontSize = 80.sp),
+            color = TrivialTheme.colors.primary,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(TrivialSize.SizeLarge))
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "YOUR SCORE",
-            style = MaterialTheme.typography.headlineSmall.copy(color = TrivialTheme.colors.onBackground),
+            text = "QUIZ COMPLETED",
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontWeight = FontWeight.Light,
+                letterSpacing = 4.sp
+            ),
+            color = TrivialTheme.colors.gray600,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(TrivialSize.SizeSmall))
+        
+        Spacer(modifier = Modifier.height(48.dp))
+        
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "$score/$numberOfQuestions",
-            style = MaterialTheme.typography.headlineLarge.copy(color = TrivialTheme.colors.onBackground),
+            text = "$score / $numberOfQuestions",
+            style = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.ExtraLight),
+            color = TrivialTheme.colors.onBackground,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(TrivialSize.SizeExtraExtraLarge))
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "YOU DID A GREAT JOB, LEARN MORE BY TAKING ANOTHER QUIZ",
-            style = MaterialTheme.typography.bodyLarge.copy(color = TrivialTheme.colors.onBackground),
+            text = "CORRECT ANSWERS",
+            style = MaterialTheme.typography.labelSmall,
+            color = TrivialTheme.colors.gray500,
             textAlign = TextAlign.Center
         )
+
         Spacer(modifier = Modifier.weight(1f))
-        TrivialButton(text = "CONTINUE", onClick = onContinue)
+        
+        TrivialButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(TrivialSize.SizeExtraExtraLarge),
+            text = "CONTINUE",
+            onClick = onContinue
+        )
     }
 }
 

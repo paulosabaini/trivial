@@ -16,15 +16,12 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = TrivialColors.onPrimaryDark,
     secondary = TrivialColors.secondaryDark,
     onSecondary = TrivialColors.onSecondaryDark,
-    tertiary = TrivialColors.tertiaryDark,
-    onTertiary = TrivialColors.onTertiaryDark,
     background = TrivialColors.backgroundDark,
     onBackground = TrivialColors.onBackgroundDark,
     surface = TrivialColors.surfaceDark,
     onSurface = TrivialColors.onSurfaceDark,
-    onSurfaceVariant = TrivialColors.onSurfaceVariantDark,
-    error = TrivialColors.errorDark,
-    onError = TrivialColors.onErrorDark,
+    error = TrivialColors.error,
+    onError = TrivialColors.onError,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -32,15 +29,12 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = TrivialColors.onPrimary,
     secondary = TrivialColors.secondary,
     onSecondary = TrivialColors.onSecondary,
-    tertiary = TrivialColors.tertiary,
-    onTertiary = TrivialColors.onTertiary,
     background = TrivialColors.background,
     onBackground = TrivialColors.onBackground,
     surface = TrivialColors.surface,
     onSurface = TrivialColors.onSurface,
-    onSurfaceVariant = TrivialColors.onSurfaceVariant,
-    error = TrivialColors.incorrectRed,
-    onError = TrivialColors.onPrimary,
+    error = TrivialColors.error,
+    onError = TrivialColors.onError,
 )
 
 @Composable
@@ -58,9 +52,8 @@ fun TrivialTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val trivialColors = TrivialColors
 
-    CompositionLocalProvider(LocalTrivialColors provides trivialColors) {
+    CompositionLocalProvider(LocalTrivialColors provides TrivialColors) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = TrivialTypography,

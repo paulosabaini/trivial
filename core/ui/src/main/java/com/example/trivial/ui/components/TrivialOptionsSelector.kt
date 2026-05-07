@@ -31,16 +31,19 @@ fun TrivialOptionsSelector(
                 shape = SegmentedButtonDefaults.itemShape(
                     index = index,
                     count = options.size,
+                    baseShape = MaterialTheme.shapes.small
                 ),
                 colors = SegmentedButtonDefaults.colors(
-                    activeContainerColor = TrivialTheme.colors.primary,
-                    activeContentColor = TrivialTheme.colors.onPrimary,
-                    inactiveContainerColor = TrivialTheme.colors.neutralWhite,
-                    inactiveContentColor = TrivialTheme.colors.neutralBlack,
+                    activeContainerColor = TrivialTheme.colors.black,
+                    activeContentColor = TrivialTheme.colors.white,
+                    inactiveContainerColor = TrivialTheme.colors.background,
+                    inactiveContentColor = TrivialTheme.colors.onBackground,
+                    activeBorderColor = TrivialTheme.colors.black,
+                    inactiveBorderColor = TrivialTheme.colors.gray300
                 )
             ) {
                 Text(
-                    modifier = Modifier.padding(TrivialSize.SizeMedium),
+                    modifier = Modifier.padding(vertical = TrivialSize.SizeMedium),
                     text = option,
                     style = MaterialTheme.typography.labelLarge,
                 )
