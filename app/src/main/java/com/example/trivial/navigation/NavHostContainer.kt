@@ -1,5 +1,7 @@
 package com.example.trivial.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +20,8 @@ fun NavHostContainer() {
     NavHost(
         navController = navController,
         startDestination = HomeRoute,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         homeScreen(
             onNavigateToQuiz = { navController.navigateToQuizSetup() },

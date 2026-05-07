@@ -14,4 +14,5 @@ data class QuizSetupUIState(
     val selectedType: TriviaQuestionType = TriviaQuestionType.MULTIPLE_CHOICE,
     val numberOfQuestions: Int = 10,
     val isReadyToPlay: Boolean = false,
+    val isCategoryBottomSheetVisible: Boolean = false,
 )

@@ -11,4 +11,6 @@ sealed interface QuizSetupAction {
     data class OnTypeChanged(val type: TriviaQuestionType) : QuizSetupAction
     data class OnAmountChanged(val amount: Int) : QuizSetupAction
     data class OnCategoryChanged(val category: TriviaCategory) : QuizSetupAction
+    data object OpenCategoryBottomSheet : QuizSetupAction
+    data object DismissCategoryBottomSheet : QuizSetupAction
 }

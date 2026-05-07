@@ -32,12 +32,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -91,13 +89,10 @@ internal fun QuizSetupScreen(
     onPlayClick: () -> Unit,
     onBack: () -> Unit,
 ) {
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     Scaffold(
-        topBar = {
-            TrivialTopAppBar(showBack = true, onBack = onBack)
-        }
+        topBar = { TrivialTopAppBar(showBack = true, onBack = onBack) },
     ) { paddingValues ->
         when {
             uiState.isLoading -> {
@@ -112,7 +107,7 @@ internal fun QuizSetupScreen(
                 ScreenContent(
                     modifier = Modifier.padding(paddingValues),
                     uiState = uiState,
-                    openBottomSheet = { openBottomSheet = it },
+                    openBottomSheet = { onQuizSetupAction(QuizSetupAction.OpenCategoryBottomSheet) },
                     onQuizSetupAction = onQuizSetupAction,
                     onPlayClick = onPlayClick
                 )
@@ -120,11 +115,11 @@ internal fun QuizSetupScreen(
         }
     }
 
-    if (openBottomSheet) {
+    if (uiState.isCategoryBottomSheetVisible) {
         ModalBottomSheet(
             sheetState = bottomSheetState,
             containerColor = TrivialTheme.colors.background,
-            onDismissRequest = { openBottomSheet = false },
+            onDismissRequest = { onQuizSetupAction(QuizSetupAction.DismissCategoryBottomSheet) },
         ) {
             CategoryBottomSheetContent(
                 selectedCategory = uiState.selectedCategory,
@@ -132,7 +127,7 @@ internal fun QuizSetupScreen(
                     onQuizSetupAction(QuizSetupAction.OnCategoryChanged(it))
                 },
                 onDismiss = {
-                    openBottomSheet = false
+                    onQuizSetupAction(QuizSetupAction.DismissCategoryBottomSheet)
                 }
             )
         }
@@ -279,10 +274,10 @@ private fun CategoryBottomSheetContent(
         modifier = modifier,
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(TrivialSize.SizeSmall),
-        verticalArrangement = Arrangement.spacedBy(TrivialSize.SizeSmall),
+        verticalArrangement = Arrangement.spacedBy(TrivialSize.SizeExtraSmall),
         contentPadding = PaddingValues(TrivialSize.SizeMedium)
     ) {
-        items(TriviaCategories.list) { category ->
+        items(TriviaCategories.list, key = { it.id }) { category ->
             FilterChip(
                 selected = category == selectedCategory,
                 label = { Text(category.name, style = MaterialTheme.typography.labelLarge) },
@@ -296,7 +291,9 @@ private fun CategoryBottomSheetContent(
                     selectedLabelColor = TrivialTheme.colors.onPrimary
                 ),
                 border = null,
-                onClick = { onCategorySelected(category) })
+                shape = RectangleShape,
+                onClick = { onCategorySelected(category) }
+            )
         }
         item(span = { GridItemSpan(2) }) {
             TrivialButton(

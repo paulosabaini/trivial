@@ -25,6 +25,8 @@ class QuizSetupViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) :
                 is QuizSetupAction.OnTypeChanged -> currentState.copy(selectedType = action.type)
                 is QuizSetupAction.OnAmountChanged -> currentState.copy(numberOfQuestions = action.amount)
                 is QuizSetupAction.OnCategoryChanged -> currentState.copy(selectedCategory = action.category)
+                is QuizSetupAction.OpenCategoryBottomSheet -> currentState.copy(isCategoryBottomSheetVisible = true)
+                is QuizSetupAction.DismissCategoryBottomSheet -> currentState.copy(isCategoryBottomSheetVisible = false)
             }
         }
     }

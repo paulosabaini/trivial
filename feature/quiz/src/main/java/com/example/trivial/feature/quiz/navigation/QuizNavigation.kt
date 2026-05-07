@@ -1,5 +1,12 @@
 package com.example.trivial.feature.quiz.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -57,7 +64,28 @@ fun NavGraphBuilder.quizGraph(
     onBack: () -> Unit,
 ) {
     navigation<QuizBaseRoute>(startDestination = QuizSetupRoute) {
-        composable<QuizSetupRoute> {
+        composable<QuizSetupRoute>(
+            enterTransition = {
+                fadeIn(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                )
+            }
+        ) {
             QuizRoute(onBack = onBack, startQuiz = startQuiz)
         }
         composable<QuizFlowRoute> { backStackEntry ->
