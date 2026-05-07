@@ -13,20 +13,25 @@ import org.koin.core.annotation.Single
 class TriviaRepositoryImpl(
     private val triviaRemoteDataSource: TriviaRemoteDataSource,
     private val triviaLocalDataSource: TriviaLocalDataSource
-) :
-    TriviaRepository {
+) : TriviaRepository {
+    private var quiz: List<Question> = mutableListOf()
+
     override suspend fun getQuestions(
         amount: Int,
         categoryId: Int,
         difficulty: TriviaDifficulty,
         type: TriviaQuestionType
     ): Result<List<Question>> {
-        return triviaRemoteDataSource.getQuestions(
+        val response = triviaRemoteDataSource.getQuestions(
             amount = amount.toString(),
             categoryId = categoryId.toString(),
             difficulty = difficulty.toParameterString(),
             type = type.toParameterString(),
         )
+        if (response.isSuccess) {
+            quiz = response.getOrDefault(emptyList())
+        }
+        return response
     }
 
     override suspend fun saveQuizResult(
@@ -38,4 +43,6 @@ class TriviaRepositoryImpl(
     ) {
         triviaLocalDataSource.saveQuizResult(score, numberOfQuestions, category, difficulty, type)
     }
+
+    override fun getQuiz() = quiz
 }

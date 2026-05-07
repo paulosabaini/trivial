@@ -1,10 +1,9 @@
-package com.example.trivial.feature.quiz.ui
+package com.example.trivial.feature.quiz.ui.setup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.trivial.network.ResponseException
 import com.example.trivial.feature.quiz.domain.usecase.GetQuestionsUseCase
-import com.example.trivial.feature.quiz.domain.usecase.SaveQuizResultUseCase
+import com.example.trivial.network.ResponseException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,12 +12,10 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class QuizViewModel(
-    private val getQuestionsUseCase: GetQuestionsUseCase,
-    private val saveQuizResultUseCase: SaveQuizResultUseCase,
-) : ViewModel() {
-    private val _uiState = MutableStateFlow(QuizUiState())
-    val uiState: StateFlow<QuizUiState> = _uiState.asStateFlow()
+class QuizSetupViewModel(private val getQuestionsUseCase: GetQuestionsUseCase) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(QuizSetupUIState())
+    val uiState: StateFlow<QuizSetupUIState> = _uiState.asStateFlow()
 
     // TODO: Retrieve categories from API and validate number of questions available.
     fun onQuizSetupAction(action: QuizSetupAction) {
@@ -44,13 +41,12 @@ class QuizViewModel(
                 difficulty = _uiState.value.selectedDifficulty,
                 type = _uiState.value.selectedType,
             ).fold(
-                onSuccess = { questions ->
+                onSuccess = {
                     _uiState.update { currentState ->
                         currentState.copy(
                             isLoading = false,
                             error = null,
                             isReadyToPlay = true,
-                            questions = questions
                         )
                     }
                 },
@@ -70,34 +66,6 @@ class QuizViewModel(
                     }
                 }
             )
-
-        }
-    }
-
-    fun onCorrectAnswer() {
-        _uiState.update { currentState ->
-            currentState.copy(score = currentState.score + 1)
-        }
-    }
-
-    fun onNextQuestion() {
-        if (_uiState.value.currentQuestion == _uiState.value.questions.size - 1) {
-            viewModelScope.launch {
-                saveQuizResultUseCase(
-                    score = _uiState.value.score,
-                    numberOfQuestions = _uiState.value.questions.size,
-                    category = _uiState.value.selectedCategory,
-                    difficulty = _uiState.value.selectedDifficulty,
-                    type = _uiState.value.selectedType,
-                )
-            }
-            _uiState.update { currentState ->
-                currentState.copy(finished = true)
-            }
-        } else {
-            _uiState.update { currentState ->
-                currentState.copy(currentQuestion = currentState.currentQuestion + 1)
-            }
         }
     }
 }

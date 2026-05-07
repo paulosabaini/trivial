@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.ui
+package com.example.trivial.feature.quiz.ui.flow
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,31 +15,43 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.trivial.feature.quiz.ui.QuizUiState
 import com.example.trivial.ui.components.TrivialQuestion
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
 import kotlinx.coroutines.delay
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun QuizFlowRoute(
-    modifier: Modifier = Modifier,
-    viewModel: QuizViewModel,
+    categoryId: Int,
+    difficulty: String,
+    questionType: String,
     onQuizFinished: (score: Int, numberOfQuestions: Int) -> Unit
 ) {
+    val viewModel: QuizViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    QuizFlowScreen(
-        modifier = modifier,
-        uiState = uiState,
-        onNextQuestion = viewModel::onNextQuestion,
-        onCorrectAnswer = viewModel::onCorrectAnswer,
-        onQuizFinished = onQuizFinished
-    )
+    LaunchedEffect(Unit) {
+        viewModel.onStart(
+            categoryId = categoryId,
+            difficulty = difficulty,
+            questionType = questionType,
+        )
+    }
+
+    if (!uiState.isLoading) {
+        QuizFlowScreen(
+            uiState = uiState,
+            onNextQuestion = viewModel::onNextQuestion,
+            onCorrectAnswer = viewModel::onCorrectAnswer,
+            onQuizFinished = onQuizFinished
+        )
+    }
 }
 
 @Composable
 internal fun QuizFlowScreen(
-    modifier: Modifier = Modifier,
     uiState: QuizUiState,
     onNextQuestion: () -> Unit,
     onCorrectAnswer: () -> Unit,
@@ -62,7 +74,7 @@ internal fun QuizFlowScreen(
 
     // TODO: Display countdown before starting the quiz
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(TrivialTheme.colors.background),
         verticalArrangement = Arrangement.Center

@@ -25,8 +25,13 @@ fun NavHostContainer() {
             onNavigateToSettings = { navController.navigate(route = "settings") }
         )
         quizGraph(
-            navController = navController,
-            startQuiz = { navController.navigateToQuizFlow() },
+            startQuiz = { categoryId, difficulty, questionType ->
+                navController.navigateToQuizFlow(
+                    categoryId = categoryId,
+                    difficulty = difficulty,
+                    questionType = questionType
+                )
+            },
             onQuizFinished = { score, numberOfQuestions ->
                 navController.navigateToQuizResult(
                     score,

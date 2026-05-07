@@ -20,4 +20,6 @@ interface TriviaRepository {
         difficulty: TriviaDifficulty,
         type: TriviaQuestionType
     )
+
+    fun getQuiz(): List<Question>
 }

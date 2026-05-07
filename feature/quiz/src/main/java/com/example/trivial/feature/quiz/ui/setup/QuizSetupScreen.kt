@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.ui
+package com.example.trivial.feature.quiz.ui.setup
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -56,18 +56,23 @@ import com.example.trivial.ui.components.TrivialOptionsSelector
 import com.example.trivial.ui.components.TrivialTopAppBar
 import com.example.trivial.ui.theme.TrivialSize
 import com.example.trivial.ui.theme.TrivialTheme
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun QuizRoute(
-    viewModel: QuizViewModel,
     onBack: () -> Unit,
-    startQuiz: () -> Unit
+    startQuiz: (categoryId: Int, difficulty: String, questionType: String) -> Unit
 ) {
+    val viewModel: QuizSetupViewModel = koinViewModel<QuizSetupViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentOnStartQuiz by rememberUpdatedState(startQuiz)
 
     if (uiState.isReadyToPlay) {
-        currentOnStartQuiz()
+        currentOnStartQuiz(
+            uiState.selectedCategory.id,
+            uiState.selectedDifficulty.name,
+            uiState.selectedType.name
+        )
     }
 
     QuizSetupScreen(
@@ -81,7 +86,7 @@ internal fun QuizRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun QuizSetupScreen(
-    uiState: QuizUiState,
+    uiState: QuizSetupUIState,
     onQuizSetupAction: (QuizSetupAction) -> Unit,
     onPlayClick: () -> Unit,
     onBack: () -> Unit,
@@ -162,7 +167,7 @@ fun ErrorMessage(modifier: Modifier = Modifier, message: String) {
 @Composable
 fun ScreenContent(
     modifier: Modifier = Modifier,
-    uiState: QuizUiState,
+    uiState: QuizSetupUIState,
     openBottomSheet: (Boolean) -> Unit,
     onQuizSetupAction: (QuizSetupAction) -> Unit,
     onPlayClick: () -> Unit
@@ -320,9 +325,8 @@ private fun CategoryBottomSheetContentPreview() {
 private fun QuizSetupScreenPreview() {
     TrivialTheme {
         QuizSetupScreen(
-            uiState = QuizUiState(),
+            uiState = QuizSetupUIState(),
             onQuizSetupAction = {},
-
             onPlayClick = {},
             onBack = {}
         )

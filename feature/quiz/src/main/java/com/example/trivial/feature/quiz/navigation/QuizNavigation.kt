@@ -1,18 +1,15 @@
 package com.example.trivial.feature.quiz.navigation
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.example.trivial.feature.quiz.ui.QuizFlowRoute
-import com.example.trivial.feature.quiz.ui.QuizRoute
-import com.example.trivial.feature.quiz.ui.QuizViewModel
-import com.example.trivial.feature.quiz.ui.QuizResultRoute
+import com.example.trivial.feature.quiz.ui.flow.QuizFlowRoute
+import com.example.trivial.feature.quiz.ui.setup.QuizRoute
+import com.example.trivial.feature.quiz.ui.result.QuizResultRoute
 import kotlinx.serialization.Serializable
-import org.koin.compose.viewmodel.koinViewModel
 
 @Serializable
 data object QuizBaseRoute
@@ -21,7 +18,11 @@ data object QuizBaseRoute
 data object QuizSetupRoute
 
 @Serializable
-data object QuizFlowRoute
+data class QuizFlowRoute(
+    val categoryId: Int,
+    val difficulty: String,
+    val questionType: String,
+)
 
 @Serializable
 data class QuizResultRoute(val score: Int, val numberOfQuestions: Int)
@@ -29,40 +30,44 @@ data class QuizResultRoute(val score: Int, val numberOfQuestions: Int)
 fun NavController.navigateToQuizSetup(navOptions: NavOptions? = null) =
     navigate(QuizSetupRoute, navOptions)
 
-fun NavController.navigateToQuizFlow(navOptions: NavOptions? = null) =
-    navigate(QuizFlowRoute, navOptions)
+fun NavController.navigateToQuizFlow(
+    categoryId: Int,
+    difficulty: String,
+    questionType: String,
+    navOptions: NavOptions? = null
+) = navigate(
+    route = QuizFlowRoute(
+        categoryId = categoryId,
+        difficulty = difficulty,
+        questionType = questionType
+    ),
+    navOptions = navOptions,
+)
 
 fun NavController.navigateToQuizResult(
     score: Int,
     numberOfQuestions: Int,
     navOptions: NavOptions? = null
-) =
-    navigate(QuizResultRoute(score, numberOfQuestions), navOptions)
+) = navigate(QuizResultRoute(score, numberOfQuestions), navOptions)
 
-// TODO: Verify if the NavController can be removed or if the navigation could be handled inside this graph.
 fun NavGraphBuilder.quizGraph(
-    navController: NavController,
-    startQuiz: () -> Unit,
+    startQuiz: (categoryId: Int, difficulty: String, questionType: String) -> Unit,
     onQuizFinished: (score: Int, numberOfQuestions: Int) -> Unit,
     goToHome: () -> Unit,
     onBack: () -> Unit,
 ) {
     navigation<QuizBaseRoute>(startDestination = QuizSetupRoute) {
-        composable<QuizSetupRoute> { backStackEntry ->
-            val viewModelStoreOwner = remember(backStackEntry) {
-                navController.getBackStackEntry(QuizBaseRoute)
-            }
-            val viewModel: QuizViewModel =
-                koinViewModel(viewModelStoreOwner = viewModelStoreOwner)
-            QuizRoute(viewModel = viewModel, onBack = onBack, startQuiz = startQuiz)
+        composable<QuizSetupRoute> {
+            QuizRoute(onBack = onBack, startQuiz = startQuiz)
         }
         composable<QuizFlowRoute> { backStackEntry ->
-            val viewModelStoreOwner = remember(backStackEntry) {
-                navController.getBackStackEntry(QuizBaseRoute)
-            }
-            val viewModel: QuizViewModel =
-                koinViewModel(viewModelStoreOwner = viewModelStoreOwner)
-            QuizFlowRoute(viewModel = viewModel, onQuizFinished = onQuizFinished)
+            val quizFlowRoute: QuizFlowRoute = backStackEntry.toRoute()
+            QuizFlowRoute(
+                categoryId = quizFlowRoute.categoryId,
+                difficulty = quizFlowRoute.difficulty,
+                questionType = quizFlowRoute.questionType,
+                onQuizFinished = onQuizFinished
+            )
         }
         composable<QuizResultRoute> { backStackEntry ->
             val quizResultRoute: QuizResultRoute = backStackEntry.toRoute()

@@ -1,4 +1,4 @@
-package com.example.trivial.feature.quiz.ui
+package com.example.trivial.feature.quiz.ui.setup
 
 import androidx.compose.runtime.Immutable
 import com.example.trivial.core.common.TriviaCategory
