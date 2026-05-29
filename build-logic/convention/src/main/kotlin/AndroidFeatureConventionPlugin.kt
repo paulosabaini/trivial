@@ -20,18 +20,18 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 implementation(project(":core:ui"))
 
-                implementation(libs.androidx.navigation)
+                implementation(libs.androidx.navigation.compose)
                 implementation(libs.androidx.lifecycle.runtime.ktx)
                 implementation(platform(libs.androidx.compose.bom))
                 implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.ui.asProvider())
+                implementation(libs.androidx.ui)
                 implementation(libs.androidx.ui.graphics)
                 implementation(libs.androidx.ui.tooling)
                 implementation(libs.androidx.material3)
-                implementation(libs.koin.compose.asProvider())
-                implementation(libs.koin.compose.navigation)
+                implementation(libs.koin.androidx.compose)
+                implementation(libs.koin.androidx.compose.navigation)
                 implementation(libs.kotlinx.collections.immutable)
-                implementation(libs.kotlinx.serialization)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
     }

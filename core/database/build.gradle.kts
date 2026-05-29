@@ -12,5 +12,5 @@ android {
 
 dependencies {
     implementation(libs.bundles.room)
-    ksp(libs.room.ksp)
+    ksp(libs.room.compiler)
 }

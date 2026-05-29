@@ -128,11 +128,11 @@ fun Project.setupBaseDependencies() {
         implementation(libs.androidx.core.ktx)
 
         // Coroutines
-        implementation(libs.coroutines.asProvider())
-        implementation(libs.coroutines.android)
+        implementation(libs.kotlin.coroutines.core)
+        implementation(libs.kotlin.coroutines.android)
 
         // Koin
-        implementation(libs.koin.asProvider())
+        implementation(libs.koin.android)
         implementation(libs.koin.annotations)
         ksp(libs.koin.ksp.compiler)
         implementation(libs.koin.core.viewmodel)

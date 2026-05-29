@@ -17,7 +17,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

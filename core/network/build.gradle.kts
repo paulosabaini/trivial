@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.ktor)
-    implementation(libs.slf4j)
+    implementation(libs.slf4j.android)
 }
