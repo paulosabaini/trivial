@@ -1,14 +1,28 @@
 plugins {
-    alias(libs.plugins.trivial.android.library)
+    alias(libs.plugins.trivial.kmp.library)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.koin.compiler)
 }
 
-android {
-    namespace = "com.example.trivial.network"
-}
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.annotations)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.bundles.ktor)
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+    }
 
-dependencies {
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.bundles.ktor)
-    implementation(libs.slf4j.android)
+    android {
+        namespace = "com.example.trivial.network"
+    }
 }

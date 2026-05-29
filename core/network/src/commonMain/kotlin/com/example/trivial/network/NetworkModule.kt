@@ -1,7 +1,6 @@
 package com.example.trivial.network
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -26,7 +25,7 @@ private const val TIMEOUT = 15000L
 class NetworkModule
 
 @Single
-fun provideHttpClient(): HttpClient = HttpClient(OkHttp) {
+fun provideHttpClient(): HttpClient = HttpClient {
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true

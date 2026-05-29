@@ -38,5 +38,10 @@ gradlePlugin {
             id = "trivial.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+
+        register("kmpLibrary") {
+            id = libs.plugins.trivial.kmp.library.get().pluginId
+            implementationClass = "KmpLibraryConventionPlugin"
+        }
     }
 }

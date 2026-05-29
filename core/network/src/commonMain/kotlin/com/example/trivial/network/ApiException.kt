@@ -1,4 +1,4 @@
-package com.example.trivial.network
+package com.example.network.trivial
 
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body

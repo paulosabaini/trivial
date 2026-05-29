@@ -132,9 +132,8 @@ fun Project.setupBaseDependencies() {
         implementation(libs.kotlin.coroutines.android)
 
         // Koin
-        implementation(libs.koin.android)
-        implementation(libs.koin.annotations)
-        ksp(libs.koin.ksp.compiler)
+        implementation(libs.koin.android.compat)
+        implementation(libs.koin.annotations.compat)
         implementation(libs.koin.core.viewmodel)
 
         // Timber

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.trivial.android.application)
     alias(libs.plugins.trivial.android.feature)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.koin.compiler)
 }
 
 android {

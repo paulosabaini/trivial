@@ -1,11 +1,11 @@
 package com.example.trivial.feature.quiz.data.network
 
+import com.example.network.trivial.toResult
 import com.example.trivial.feature.quiz.data.api.TriviaRemoteDataSource
 import com.example.trivial.feature.quiz.data.mapper.toQuestion
 import com.example.trivial.feature.quiz.data.network.model.TriviaReplyDto
 import com.example.trivial.feature.quiz.domain.model.Question
 import com.example.trivial.network.ResponseException
-import com.example.trivial.network.toResult
 import org.koin.core.annotation.Single
 
 @Single(binds = [TriviaRemoteDataSource::class])
