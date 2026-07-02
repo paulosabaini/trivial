@@ -30,7 +30,6 @@ ktor = "3.4.3"
 ktor-coroutines = "0.9.2"
 material3 = "1.4.0"
 room = "2.8.4"
-slf4j = "2.0.17-0"
 timber = "5.0.1"
 
 [libraries]
@@ -91,7 +90,6 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-slf4j-android = { group = "uk.uuid.slf4j", name = "slf4j-android", version.ref = "slf4j" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 # Build-logic
